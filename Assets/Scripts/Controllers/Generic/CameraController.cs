@@ -14,4 +14,7 @@ public class CameraController : MonoBehaviour
             this.transform.Rotate(new Vector3(addRotation, 0, 0), Space.Self);
         }
     }
+    public void crouch(float newHeight) {
+        this.transform.localPosition = new Vector3(this.transform.localPosition.x, newHeight, this.transform.localPosition.z);
+    }
 }

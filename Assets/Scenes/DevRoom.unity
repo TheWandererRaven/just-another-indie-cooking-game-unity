@@ -180,7 +180,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 27575061}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.96, y: 0.37, z: 0}
+  m_LocalPosition: {x: 1.96, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 261574884}
@@ -793,6 +793,8 @@ MonoBehaviour:
   playerController: {fileID: 27575065}
   cameraController: {fileID: 34641127}
   walkingSpeedUnitsPerSecond: 4
+  crouchingSpeedUnitsPerSecond: 1
+  crouchingSize: 0.9
   walkingSpeedMax: 2
 --- !u!4 &1114616374
 Transform:
@@ -909,6 +911,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 84500447-2dca-4676-a5cc-66fe097058f4
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1114616373}
+        m_TargetAssemblyTypeName: ControlsController, Assembly-CSharp
+        m_MethodName: Crouch
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a33b2d6e-230d-4e1b-92d2-146194e7eae1
+    m_ActionName: Player/Crouch[/Keyboard/leftCtrl]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
