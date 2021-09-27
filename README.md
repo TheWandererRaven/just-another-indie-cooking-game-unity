@@ -7,7 +7,7 @@ So far I only have a Game Jolt page for the game:
 https://gamejolt.com/games/ligma/384044
 
 1. Player
-   - [ ] Player movement
+   - [X] Player movement
    - [ ] Object drag & drop
       - Long press E to drag, press E to drop
    - [ ] Interact with objects
