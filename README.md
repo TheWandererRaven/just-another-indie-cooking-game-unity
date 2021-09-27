@@ -8,14 +8,18 @@ https://gamejolt.com/games/ligma/384044
 
 1. Player
    - [X] Player movement
+   - [ ] Hand interaction handler
+      - Right and Left click handle primary and secondary hand interactions.
    - [ ] Object drag & drop
-      - Long press E to drag, press E to drop
-   - [ ] Interact with objects
+      - With empty hand (or no interaction object) hold left click to grab an object.
+   - [ ] Off-hand Interact with objects
       - [ ] Player interaction trigger
          - Press E to interact
       - [ ] Object interaction handler
    - [ ] Inventory & Inventory management
    - [ ] Pickup (store in inventory)
       - Press E to pick up (pick up obj / objectPickable bool)
+   - [ ] Object drag & snap
+      - With empty hand (or no interaction object) hold right click to enter snap mode.
 2. Assamblement Station
    - General idea: Place to move most ingerdients to assable food order on food tray. Entire new system, assamble only.
