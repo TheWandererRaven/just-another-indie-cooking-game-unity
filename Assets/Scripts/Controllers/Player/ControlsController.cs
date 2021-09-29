@@ -104,22 +104,15 @@ public class ControlsController : MonoBehaviour
 
     }
     public void Interact3(InputAction.CallbackContext context) {
-        print("Action 3");
-        print(context.time - context.startTime);
-        if(context.started) {
-        } else if(context.performed) {
+        if(context.performed) {
             if(cameraController.grabbedObject != null) cameraController.dropGrabbedObject();
-        } else if(context.canceled) {
+            else {
+                // TO DO: Interaction trigger
+            }
         }
     }
     public void Grab(InputAction.CallbackContext context) {
-        if(cameraController.hasGrabbableInSights())
-            if(context.performed) {
-                print("Object is grabbed");
-                cameraController.grabObjectInSights();
-                //handController.grabObject(cameraController.getGameObjectInSights());
-            } else if(context.canceled) {
-                print("Released Grab button");
-            }
+        if(cameraController.hasGrabbableInSights() && context.performed)
+            cameraController.grabObjectInSights();
     }
 }

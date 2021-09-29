@@ -14,20 +14,21 @@ public class CameraController : MonoBehaviour
     private RigidbodyConstraints grabbedOriginalContraints;
     private float verticalRotation = 0f;
     void Update() {
+        // Only need to keep the first "if" to work properly
         if(Physics.Raycast(this.transform.position, this.transform.forward, out rayHit, interactionDistanceMax))
             if(rayHit.transform.CompareTag("Interactable") || rayHit.transform.CompareTag("Grabbable"))
                 print(rayHit.transform.gameObject.name);
+
         if(grabbedObject != null)
+            // HANDLE COMMON OBJECT with rigidbody
             if(grabbedRigidBody != null){
-                print("RB");
                 Vector3 forwardPoint = this.transform.position + (this.transform.forward * 1.5f);
                 Vector3 vectorDistance = forwardPoint - grabbedObject.transform.position;
                 grabbedRigidBody.AddForce(
                     vectorDistance * 100f
                 );
-            }
-            else{
-                print("NO RB");
+            }else{
+                // HANDLE UNCOMON OBJECT without rigidbody
                 grabbedObject.transform.position = this.transform.position + this.transform.forward;
             }
     }
