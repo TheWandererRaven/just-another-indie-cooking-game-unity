@@ -97,4 +97,29 @@ public class ControlsController : MonoBehaviour
             cameraController.crouch(isCrouching ? crouchingSize : standingSize);
         }
     }
+    public void Interact1(InputAction.CallbackContext context) {
+
+    }
+    public void Interact2(InputAction.CallbackContext context) {
+
+    }
+    public void Interact3(InputAction.CallbackContext context) {
+        print("Action 3");
+        print(context.time - context.startTime);
+        if(context.started) {
+        } else if(context.performed) {
+            if(cameraController.grabbedObject != null) cameraController.dropGrabbedObject();
+        } else if(context.canceled) {
+        }
+    }
+    public void Grab(InputAction.CallbackContext context) {
+        if(cameraController.hasGrabbableInSights())
+            if(context.performed) {
+                print("Object is grabbed");
+                cameraController.grabObjectInSights();
+                //handController.grabObject(cameraController.getGameObjectInSights());
+            } else if(context.canceled) {
+                print("Released Grab button");
+            }
+    }
 }
