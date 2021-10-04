@@ -6,10 +6,12 @@ public class CameraController : MonoBehaviour
 {
     public float verticalRotationLimitMin = -75f;
     public float verticalRotationLimitMax = 75f;
-    public float interactionDistanceMax = 2.0f;
+    public float interactionDistanceMax = 2f;
     public RaycastHit rayHit;
     public GameObject grabbedObject;
-    public float addGrabDragSlow;
+    public float grabbedDistance = 2.5f;
+    public float addGrabDragSlow = 15f;
+    public float grabbedDistranceThreshhold = 2f;
     private Rigidbody grabbedRigidBody;
     private RigidbodyConstraints grabbedOriginalContraints;
     private float verticalRotation = 0f;
@@ -22,15 +24,16 @@ public class CameraController : MonoBehaviour
         if(grabbedObject != null)
             // HANDLE COMMON OBJECT with rigidbody
             if(grabbedRigidBody != null){
-                Vector3 forwardPoint = this.transform.position + (this.transform.forward * 1.5f);
-                Vector3 vectorDistance = forwardPoint - grabbedObject.transform.position;
-                grabbedRigidBody.AddForce(
-                    vectorDistance * 100f
-                );
-            }else{
+                Vector3 forwardPoint = this.transform.position + (this.transform.forward * (grabbedDistance - 1f));
+                if(Vector3.Distance(forwardPoint, grabbedObject.transform.position) <= grabbedDistranceThreshhold){
+                    Vector3 vectorDistance = forwardPoint - grabbedObject.transform.position;
+                    grabbedRigidBody.AddForce(
+                        vectorDistance * 100f
+                    );
+                } else dropGrabbedObject();
+            } else
                 // HANDLE UNCOMON OBJECT without rigidbody
-                grabbedObject.transform.position = this.transform.position + this.transform.forward;
-            }
+                grabbedObject.transform.position = this.transform.position + (this.transform.forward * (grabbedDistance - 1f));
     }
     public void rotateVertically(float addRotation) {
         float newRotation = verticalRotation + addRotation;
@@ -55,9 +58,8 @@ public class CameraController : MonoBehaviour
         if(hasGrabbableInSights()){
             grabbedObject = getGameObjectInSights();
             //grabbedObject.transform.SetParent(this.transform);
-            grabbedRigidBody = grabbedObject.GetComponent<Rigidbody>();
-            grabbedRigidBody.drag += addGrabDragSlow;
-            if(grabbedRigidBody != null){
+            if(grabbedObject.TryGetComponent<Rigidbody>(out grabbedRigidBody)){
+                grabbedRigidBody.drag += addGrabDragSlow;
                 grabbedRigidBody.useGravity = false;
                 grabbedOriginalContraints = grabbedRigidBody.constraints;
                 grabbedRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
@@ -69,8 +71,8 @@ public class CameraController : MonoBehaviour
             if(grabbedRigidBody != null){
                 grabbedRigidBody.useGravity = true;
                 grabbedRigidBody.constraints = grabbedOriginalContraints;
+                grabbedRigidBody.drag -= addGrabDragSlow;
             }
-            grabbedRigidBody.drag -= addGrabDragSlow;
             //grabbedObject.transform.SetParent(null);
             grabbedRigidBody = null;
             grabbedObject = null;
