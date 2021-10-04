@@ -11,21 +11,28 @@ public class CameraController : MonoBehaviour
     public GameObject grabbedObject;
     public float grabbedDistance = 2.5f;
     public float addGrabDragSlow = 15f;
-    public float grabbedDistranceThreshhold = 2f;
+    public float grabbedDistanceThreshhold = 2f;
+    public string[] raycastLayers = {
+        "Interactable"
+    };
     private Rigidbody grabbedRigidBody;
     private RigidbodyConstraints grabbedOriginalContraints;
     private float verticalRotation = 0f;
+    private LayerMask raycastLayerMask {
+        get {
+            return LayerMask.GetMask(raycastLayers);
+        }
+    }
     void Update() {
         // Only need to keep the first "if" to work properly
-        if(Physics.Raycast(this.transform.position, this.transform.forward, out rayHit, interactionDistanceMax))
-            if(rayHit.transform.CompareTag("Interactable") || rayHit.transform.CompareTag("Grabbable"))
-                print(rayHit.transform.gameObject.name);
+        if(Physics.Raycast(this.transform.position, this.transform.forward, out rayHit, interactionDistanceMax, raycastLayerMask))
+            print(rayHit.transform.gameObject.name);
 
         if(grabbedObject != null)
             // HANDLE COMMON OBJECT with rigidbody
             if(grabbedRigidBody != null){
                 Vector3 forwardPoint = this.transform.position + (this.transform.forward * (grabbedDistance - 1f));
-                if(Vector3.Distance(forwardPoint, grabbedObject.transform.position) <= grabbedDistranceThreshhold){
+                if(Vector3.Distance(forwardPoint, grabbedObject.transform.position) <= grabbedDistanceThreshhold){
                     Vector3 vectorDistance = forwardPoint - grabbedObject.transform.position;
                     grabbedRigidBody.AddForce(
                         vectorDistance * 100f

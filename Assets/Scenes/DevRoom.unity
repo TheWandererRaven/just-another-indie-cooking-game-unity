@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 16428040}
   - component: {fileID: 16428039}
   - component: {fileID: 16428038}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Static Cylinder
   m_TagString: Grabbable
   m_Icon: {fileID: 0}
@@ -297,7 +297,7 @@ GameObject:
   - component: {fileID: 34641125}
   - component: {fileID: 34641124}
   - component: {fileID: 34641127}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -387,7 +387,9 @@ MonoBehaviour:
   grabbedObject: {fileID: 0}
   grabbedDistance: 2.5
   addGrabDragSlow: 15
-  grabbedDistranceThreshhold: 3
+  grabbedDistanceThreshhold: 2
+  raycastLayers:
+  - Interactable
 --- !u!1 &168971529
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,7 +444,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 261574884}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Brain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -667,7 +669,7 @@ GameObject:
   - component: {fileID: 556554147}
   - component: {fileID: 556554146}
   - component: {fileID: 556554145}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1061,7 +1063,7 @@ GameObject:
   - component: {fileID: 1114616374}
   - component: {fileID: 1114616373}
   - component: {fileID: 1114616375}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: ControlsController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1558,7 +1560,7 @@ GameObject:
   - component: {fileID: 1507273725}
   - component: {fileID: 1507273724}
   - component: {fileID: 1507273723}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Dynamic Cylinder
   m_TagString: Grabbable
   m_Icon: {fileID: 0}
