@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Interactable
   - Grabbable
+  - Pickupable
   layers:
   - Default
   - TransparentFX
