@@ -10,12 +10,13 @@ https://gamejolt.com/games/ligma/384044
    - [X] Player movement
    - [ ] Hand interaction handler
       - Right and Left click handle primary and secondary hand interactions.
-   - [ ] Object drag & drop
-      - With empty hand (or no interaction object) hold left click to grab an object.
+   - [X] Object drag & drop
+      - With empty hand (or no interaction object) hold E to grab an object, press E again to to drop.
    - [ ] Off-hand Interact with objects
       - [ ] Player interaction trigger
          - Press E to interact
       - [ ] Object interaction handler
+   - [ ] Redistribute player features & cleanup
    - [ ] Inventory & Inventory management
    - [ ] Pickup (store in inventory)
       - Press E to pick up (pick up obj / objectPickable bool)

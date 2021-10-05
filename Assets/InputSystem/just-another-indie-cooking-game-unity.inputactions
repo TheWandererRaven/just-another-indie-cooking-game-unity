@@ -22,7 +22,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Fire",
+                    "name": "Interact1",
                     "type": "Button",
                     "id": "4d424f62-986d-4808-b8c3-64591748935e",
                     "expectedControlType": "Button",
@@ -33,6 +33,30 @@
                     "name": "Crouch",
                     "type": "Button",
                     "id": "a33b2d6e-230d-4e1b-92d2-146194e7eae1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Interact2",
+                    "type": "Button",
+                    "id": "affe4606-545b-4d0b-a354-5e4f0d3d48fa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Interact3",
+                    "type": "Button",
+                    "id": "c2ffd059-3228-4462-8950-c48fd836f654",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Grab",
+                    "type": "Button",
+                    "id": "4b7515a3-0d8d-4074-96b0-f64fc40b1f29",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -211,7 +235,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Fire",
+                    "action": "Interact1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -222,7 +246,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Fire",
+                    "action": "Interact1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -233,7 +257,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Touch",
-                    "action": "Fire",
+                    "action": "Interact1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -244,7 +268,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "Fire",
+                    "action": "Interact1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -255,7 +279,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
-                    "action": "Fire",
+                    "action": "Interact1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -267,6 +291,39 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f5722a38-e7d3-45c2-bc94-1fbaed155655",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f9727ce7-1080-4854-8e68-4a9c6b02eda7",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Interact3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d3457280-f356-4527-bb1d-f310d4afd635",
+                    "path": "<Keyboard>/e",
+                    "interactions": "Hold(duration=1)",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Grab",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

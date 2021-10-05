@@ -9,6 +9,7 @@ public class ControlsController : MonoBehaviour
     public MovementController playerMovement;
     public CharacterController playerController;
     public CameraController cameraController;
+    public InteractionController interactionController;
     public float walkingSpeedUnitsPerSecond = 1.0f;
     public float crouchingSpeedUnitsPerSecond = 0.5f;
     private float walkingSpeedBase {
@@ -96,5 +97,23 @@ public class ControlsController : MonoBehaviour
 
             cameraController.crouch(isCrouching ? crouchingSize : standingSize);
         }
+    }
+    public void Interact1(InputAction.CallbackContext context) {
+
+    }
+    public void Interact2(InputAction.CallbackContext context) {
+
+    }
+    public void Interact3(InputAction.CallbackContext context) {
+        if(context.performed) {
+            if(interactionController.grabbedObject != null) interactionController.dropGrabbedObject();
+            else {
+                // TO DO: Interaction trigger
+            }
+        }
+    }
+    public void Grab(InputAction.CallbackContext context) {
+        if(!interactionController.hasGrabbedObject() && context.performed)
+            interactionController.grabObjectInSights();
     }
 }
