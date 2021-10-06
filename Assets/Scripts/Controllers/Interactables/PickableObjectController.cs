@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickableObjectController : BasicObjectController
+public class PickableObjectController : InteractableObject
 {
-    // Update is called once per frame
-    void Update()
+    public override void interact(GameObject handObject=null)
     {
-        
+        // EMPTY HANDED INTERACTION
+        if(handObject == null) print("Object is being picked up!");
     }
 }
