@@ -5,13 +5,19 @@ using UnityEngine.InputSystem;
 
 public class ControlsController : MonoBehaviour
 {
+    #region Controller Configuration
     public ConfigurationController config;
     public MovementController playerMovement;
     public CharacterController playerController;
     public CameraController cameraController;
     public InteractionController interactionController;
+    public GameObject handObject;
     public float walkingSpeedUnitsPerSecond = 1.0f;
+    public float walkingSpeedMax = 1.0f;
     public float crouchingSpeedUnitsPerSecond = 0.5f;
+    public float crouchingSize = 0.5f;
+    #endregion
+    #region Script only variables
     private float walkingSpeedBase {
         get {
             return ((
@@ -19,22 +25,12 @@ public class ControlsController : MonoBehaviour
                 )/5) * Time.deltaTime;
         }
     }
-    public float crouchingSize = 0.5f;
     private float standingSize = 1f;
     private float standingRadius = 1.5f;
     private bool isCrouching = false;
-    public float walkingSpeedMax = 1.0f;
     private Vector3 walkingInputs = new Vector3(0, 0, 0);
     private Vector2 lookingInputs = new Vector2(0, 0);
-    private Vector3 calculateMovementSpeed() {
-        Vector3 Speed = (walkingSpeedBase * 1000) * (
-            (this.transform.forward *  walkingInputs.z) +
-            (this.transform.right *  walkingInputs.x)
-        );
-        Speed.x = (Mathf.Abs(Speed.x) <= walkingSpeedMax) ? Speed.x : (Speed.normalized.x * walkingSpeedMax);
-        Speed.z = (Mathf.Abs(Speed.z) <= walkingSpeedMax) ? Speed.z : (Speed.normalized.z * walkingSpeedMax);
-        return Speed;
-    }
+    #endregion
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -64,6 +60,18 @@ public class ControlsController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape)) if(Cursor.lockState != CursorLockMode.None) Cursor.lockState = CursorLockMode.None; else Application.Quit();
         */
     }
+    #region Helper Methods
+    private Vector3 calculateMovementSpeed() {
+        Vector3 Speed = (walkingSpeedBase * 1000) * (
+            (this.transform.forward *  walkingInputs.z) +
+            (this.transform.right *  walkingInputs.x)
+        );
+        if(Speed.magnitude > walkingSpeedMax) Speed = walkingSpeedMax * Speed / Speed.magnitude;
+        print(Speed.magnitude);
+        return Speed;
+    }
+    #endregion
+    #region Input Event Handlers
     public void Move(InputAction.CallbackContext context) {
         if(context.performed) {
             Vector2 walkingMovement = context.ReadValue<Vector2>();
@@ -105,16 +113,15 @@ public class ControlsController : MonoBehaviour
 
     }
     public void Interact3(InputAction.CallbackContext context) {
-        if(context.performed) {
-            if(interactionController.grabbedObject != null) interactionController.dropGrabbedObject();
-        } else if(context.canceled) {
-            if(interactionController.hasInteractableInSights() && !interactionController.hasGrabbedObject()){
-                interactionController.getGameObjectInSights().GetComponent<InteractableObject>().interact();
-            }
+        if(context.canceled) {
+            interactionController.interactWithObjectInSights();
         }
     }
     public void Grab(InputAction.CallbackContext context) {
         if(!interactionController.hasGrabbedObject() && context.performed)
             interactionController.grabObjectInSights();
+        else if(context.canceled)
+            if(interactionController.grabbedObject != null) interactionController.dropGrabbedObject();
     }
+    #endregion
 }

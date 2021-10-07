@@ -10,6 +10,7 @@ public class InteractionController : MonoBehaviour
     public Transform PlayerCamera;
     public PlayerInput playerInput;
     public TextMeshProUGUI playerInteractionText;
+    public HandController handController;
     public float interactionDistanceMax = 2f;
     public float grabbedDistance = 2.5f;
     public float addGrabDragSlow = 15f;
@@ -58,7 +59,7 @@ public class InteractionController : MonoBehaviour
         return rayHit.transform != null ? rayHit.transform.CompareTag("Grabbable") : false;
     }
     public bool hasInteractableInSights() {
-        return rayHit.transform != null ? rayHit.transform.CompareTag("Interactable") || rayHit.transform.CompareTag("Pickable") : false;
+        return rayHit.transform != null ? rayHit.transform.CompareTag("Interactable") : false;
     }
     public bool hasPickableInSights() {
         return rayHit.transform != null ? rayHit.transform.CompareTag("Pickable") : false;
@@ -95,6 +96,14 @@ public class InteractionController : MonoBehaviour
             grabbedRigidBody = null;
             grabbedObject = null;
         }
+    }
+    public void interactWithObjectInSights() {
+        if(!hasGrabbedObject())
+            if(hasPickableInSights()) getGameObjectInSights().GetComponent<PickableObjectController>().interact(this.gameObject);
+            else if(hasInteractableInSights()) getGameObjectInSights().GetComponent<InteractableObject>().interact();
+    }
+    public void equipOnHand(GameObject item) {
+        handController.equipItem(item);
     }
     #endregion
 }

@@ -6,7 +6,10 @@ public class PickableObjectController : InteractableObject
 {
     public override void interact(GameObject handObject=null)
     {
-        // EMPTY HANDED INTERACTION
-        if(handObject == null) print("Object is being picked up!");
+        InteractionController interactionController;
+        // Pick Up
+        if(handObject == null) print("Need Hand object");
+        // TODO: replace script to add pickable to inventory
+        else if(handObject.TryGetComponent<InteractionController>(out interactionController)) interactionController.equipOnHand(this.gameObject);
     }
 }
