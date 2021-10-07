@@ -107,8 +107,9 @@ public class ControlsController : MonoBehaviour
     public void Interact3(InputAction.CallbackContext context) {
         if(context.performed) {
             if(interactionController.grabbedObject != null) interactionController.dropGrabbedObject();
-            else {
-                // TO DO: Interaction trigger
+        } else if(context.canceled) {
+            if(interactionController.hasInteractableInSights() && !interactionController.hasGrabbedObject()){
+                interactionController.getGameObjectInSights().GetComponent<InteractableObject>().interact();
             }
         }
     }

@@ -35,7 +35,7 @@ public class InteractionController : MonoBehaviour
         if(Physics.Raycast(PlayerCamera.position, PlayerCamera.forward, out rayHit, interactionDistanceMax, raycastLayerMask) && !hasGrabbedObject()){
             string objectName = rayHit.transform.name;
             string interactControl = playerInput.actions.FindAction("Interact3").GetBindingDisplayString();
-            string interactionType = hasPickupableInSights() ? "pick up" : "interact with";
+            string interactionType = hasPickableInSights() ? "pick up" : "interact with";
             playerInteractionText.text = hasGrabbableInSights() ? "" : $"Press {interactControl} to {interactionType} {objectName}";
         } else playerInteractionText.text = "";
 
@@ -58,10 +58,10 @@ public class InteractionController : MonoBehaviour
         return rayHit.transform != null ? rayHit.transform.CompareTag("Grabbable") : false;
     }
     public bool hasInteractableInSights() {
-        return rayHit.transform != null ? rayHit.transform.CompareTag("Interactable") : false;
+        return rayHit.transform != null ? rayHit.transform.CompareTag("Interactable") || rayHit.transform.CompareTag("Pickable") : false;
     }
-    public bool hasPickupableInSights() {
-        return rayHit.transform != null ? rayHit.transform.CompareTag("Pickupable") : false;
+    public bool hasPickableInSights() {
+        return rayHit.transform != null ? rayHit.transform.CompareTag("Pickable") : false;
     }
     public bool hasGrabbedObject() {
         return grabbedObject != null;
@@ -73,7 +73,7 @@ public class InteractionController : MonoBehaviour
         return rayHit.transform.gameObject;
     }
     public void grabObjectInSights() {
-        if(hasGrabbableInSights()){
+        if(hasGrabbableInSights() || hasPickableInSights()){
             grabbedObject = getGameObjectInSights();
             //grabbedObject.transform.SetParent(this.transform);
             if(grabbedObject.TryGetComponent<Rigidbody>(out grabbedRigidBody)){
