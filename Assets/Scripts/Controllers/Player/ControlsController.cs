@@ -67,7 +67,6 @@ public class ControlsController : MonoBehaviour
             (this.transform.right *  walkingInputs.x)
         );
         if(Speed.magnitude > walkingSpeedMax) Speed = walkingSpeedMax * Speed / Speed.magnitude;
-        print(Speed.magnitude);
         return Speed;
     }
     #endregion
@@ -106,13 +105,13 @@ public class ControlsController : MonoBehaviour
             cameraController.crouch(isCrouching ? crouchingSize : standingSize);
         }
     }
-    public void Interact1(InputAction.CallbackContext context) {
-
+    public void handPrimaryAction(InputAction.CallbackContext context) {
+        interactionController.executePrimaryAction(context.phase);
     }
-    public void Interact2(InputAction.CallbackContext context) {
-
+    public void handSecondaryAction(InputAction.CallbackContext context) {
+        interactionController.executeSecondaryAction(context.phase);
     }
-    public void Interact3(InputAction.CallbackContext context) {
+    public void Interact(InputAction.CallbackContext context) {
         if(context.canceled) {
             interactionController.interactWithObjectInSights();
         }
