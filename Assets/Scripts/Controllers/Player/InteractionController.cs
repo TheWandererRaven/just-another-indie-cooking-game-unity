@@ -108,17 +108,22 @@ public class InteractionController : MonoBehaviour
     }
     public void executePrimaryAction(InputActionPhase phase) {
         if(handController.isEquippedObjectActionable()){
-            if(phase == InputActionPhase.Started) handController.equippedItem.GetComponent<ActionableObject>().primaryAction_Single();
-            else if(phase == InputActionPhase.Performed) handController.equippedItem.GetComponent<ActionableObject>().primaryAction_Hold();
-            else handController.equippedItem.GetComponent<ActionableObject>().primaryAction_Canceled();
+            if(phase == InputActionPhase.Started)
+                foreach(PrimaryActionableObject obj in handController.equippedItem.GetComponents<PrimaryActionableObject>()) obj.primaryAction_Single();
+            else if(phase == InputActionPhase.Performed)
+                foreach(PrimaryActionableObject obj in handController.equippedItem.GetComponents<PrimaryActionableObject>()) obj.primaryAction_Hold();
+            else
+                foreach(PrimaryActionableObject obj in handController.equippedItem.GetComponents<PrimaryActionableObject>()) obj.primaryAction_Canceled();
         }
     }
     public void executeSecondaryAction(InputActionPhase phase) {
-        print(phase);
         if(handController.isEquippedObjectActionable()){
-            if(phase == InputActionPhase.Started) handController.equippedItem.GetComponent<ActionableObject>().secondaryAction_Single();
-            else if(phase == InputActionPhase.Performed) handController.equippedItem.GetComponent<ActionableObject>().secondaryAction_Hold();
-            else handController.equippedItem.GetComponent<ActionableObject>().secondaryAction_Canceled();
+            if(phase == InputActionPhase.Started)
+                foreach(SecondaryActionableObject obj in handController.equippedItem.GetComponents<SecondaryActionableObject>()) obj.secondaryAction_Single();
+            else if(phase == InputActionPhase.Performed)
+                foreach(SecondaryActionableObject obj in handController.equippedItem.GetComponents<SecondaryActionableObject>()) obj.secondaryAction_Hold();
+            else 
+                foreach(SecondaryActionableObject obj in handController.equippedItem.GetComponents<SecondaryActionableObject>()) obj.secondaryAction_Canceled();
         }
     }
     #endregion
