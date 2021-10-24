@@ -14,7 +14,7 @@ https://gamejolt.com/games/ligma/384044
       - [X] Player interaction trigger
          - Press E to interact
       - [X] Object interaction handler
-   - [ ] Hand interaction handler
+   - [X] Hand interaction handler
       - Right and Left click handle primary and secondary hand interactions.
    - [ ] Redistribute player features & cleanup
    - [ ] Inventory (data tracking only, no UI)
