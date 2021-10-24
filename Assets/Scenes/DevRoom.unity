@@ -988,6 +988,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equippedItem: {fileID: 0}
+  dropDistanceForward: 0.5
 --- !u!1 &621467502
 GameObject:
   m_ObjectHideFlags: 0
@@ -1530,6 +1531,7 @@ MonoBehaviour:
   grabbedDistance: 2.5
   addGrabDragSlow: 15
   grabbedDistanceThreshhold: 2
+  throwForce: 5
   raycastLayers:
   - Interactable
   grabbedObject: {fileID: 0}
@@ -1635,7 +1637,6 @@ MonoBehaviour:
   playerController: {fileID: 27575065}
   cameraController: {fileID: 34641127}
   interactionController: {fileID: 1076395795}
-  handObject: {fileID: 0}
   walkingSpeedUnitsPerSecond: 4
   walkingSpeedMax: 2
   crouchingSpeedUnitsPerSecond: 1

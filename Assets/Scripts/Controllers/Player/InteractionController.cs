@@ -15,6 +15,7 @@ public class InteractionController : MonoBehaviour
     public float grabbedDistance = 2.5f;
     public float addGrabDragSlow = 15f;
     public float grabbedDistanceThreshhold = 2f;
+    public float throwForce = 5f;
     public string[] raycastLayers = {
         "Interactable"
     };
@@ -98,6 +99,14 @@ public class InteractionController : MonoBehaviour
             grabbedObject = null;
         }
     }
+    public void throwGrabbedObject() {
+        GameObject throwableObject = grabbedObject;
+        dropGrabbedObject();
+        Rigidbody throwableRB = null;
+        if(throwableObject.TryGetComponent<Rigidbody>(out throwableRB)) throwableRB.AddForce(
+            throwForce * PlayerCamera.forward, ForceMode.Impulse
+        );
+    }
     public void interactWithObjectInSights() {
         if(!hasGrabbedObject())
             if(hasPickableInSights() || hasActionableInSights()) getGameObjectInSights().GetComponent<PickableObjectController>().interact(this.gameObject);
@@ -107,7 +116,8 @@ public class InteractionController : MonoBehaviour
         handController.equipItem(item);
     }
     public void executePrimaryAction(InputActionPhase phase) {
-        if(handController.isEquippedObjectActionable()){
+        if(grabbedObject != null) this.throwGrabbedObject();
+        else if(handController.isEquippedObjectActionable()){
             if(phase == InputActionPhase.Started)
                 foreach(PrimaryActionableObject obj in handController.equippedItem.GetComponents<PrimaryActionableObject>()) obj.primaryAction_Single();
             else if(phase == InputActionPhase.Performed)

@@ -11,7 +11,6 @@ public class ControlsController : MonoBehaviour
     public CharacterController playerController;
     public CameraController cameraController;
     public InteractionController interactionController;
-    public GameObject handObject;
     public float walkingSpeedUnitsPerSecond = 1.0f;
     public float walkingSpeedMax = 1.0f;
     public float crouchingSpeedUnitsPerSecond = 0.5f;
@@ -63,8 +62,8 @@ public class ControlsController : MonoBehaviour
     #region Helper Methods
     private Vector3 calculateMovementSpeed() {
         Vector3 Speed = (walkingSpeedBase * 1000) * (
-            (this.transform.forward *  walkingInputs.z) +
-            (this.transform.right *  walkingInputs.x)
+            (playerController.transform.forward * walkingInputs.z) +
+            (playerController.transform.right * walkingInputs.x)
         );
         if(Speed.magnitude > walkingSpeedMax) Speed = walkingSpeedMax * Speed / Speed.magnitude;
         return Speed;
