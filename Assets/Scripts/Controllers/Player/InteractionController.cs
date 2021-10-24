@@ -10,10 +10,12 @@ public class InteractionController : MonoBehaviour
     public Transform PlayerCamera;
     public PlayerInput playerInput;
     public TextMeshProUGUI playerInteractionText;
+    public HandController handController;
     public float interactionDistanceMax = 2f;
     public float grabbedDistance = 2.5f;
     public float addGrabDragSlow = 15f;
     public float grabbedDistanceThreshhold = 2f;
+    public float throwForce = 5f;
     public string[] raycastLayers = {
         "Interactable"
     };
@@ -34,7 +36,7 @@ public class InteractionController : MonoBehaviour
         // Only need to keep the first "if" to work properly
         if(Physics.Raycast(PlayerCamera.position, PlayerCamera.forward, out rayHit, interactionDistanceMax, raycastLayerMask) && !hasGrabbedObject()){
             string objectName = rayHit.transform.name;
-            string interactControl = playerInput.actions.FindAction("Interact3").GetBindingDisplayString();
+            string interactControl = playerInput.actions.FindAction("Interact").GetBindingDisplayString();
             string interactionType = hasPickableInSights() ? "pick up" : "interact with";
             playerInteractionText.text = hasGrabbableInSights() ? "" : $"Press {interactControl} to {interactionType} {objectName}";
         } else playerInteractionText.text = "";
@@ -58,10 +60,13 @@ public class InteractionController : MonoBehaviour
         return rayHit.transform != null ? rayHit.transform.CompareTag("Grabbable") : false;
     }
     public bool hasInteractableInSights() {
-        return rayHit.transform != null ? rayHit.transform.CompareTag("Interactable") || rayHit.transform.CompareTag("Pickable") : false;
+        return rayHit.transform != null ? rayHit.transform.CompareTag("Interactable") : false;
     }
     public bool hasPickableInSights() {
         return rayHit.transform != null ? rayHit.transform.CompareTag("Pickable") : false;
+    }
+    public bool hasActionableInSights() {
+        return rayHit.transform != null ? rayHit.transform.CompareTag("Actionable") : false;
     }
     public bool hasGrabbedObject() {
         return grabbedObject != null;
@@ -73,9 +78,8 @@ public class InteractionController : MonoBehaviour
         return rayHit.transform.gameObject;
     }
     public void grabObjectInSights() {
-        if(hasGrabbableInSights() || hasPickableInSights()){
+        if(hasGrabbableInSights() || hasPickableInSights() || hasActionableInSights()){
             grabbedObject = getGameObjectInSights();
-            //grabbedObject.transform.SetParent(this.transform);
             if(grabbedObject.TryGetComponent<Rigidbody>(out grabbedRigidBody)){
                 grabbedRigidBody.drag += addGrabDragSlow;
                 grabbedRigidBody.useGravity = false;
@@ -91,9 +95,45 @@ public class InteractionController : MonoBehaviour
                 grabbedRigidBody.constraints = grabbedOriginalContraints;
                 grabbedRigidBody.drag -= addGrabDragSlow;
             }
-            //grabbedObject.transform.SetParent(null);
             grabbedRigidBody = null;
             grabbedObject = null;
+        }
+    }
+    public void throwGrabbedObject() {
+        GameObject throwableObject = grabbedObject;
+        dropGrabbedObject();
+        Rigidbody throwableRB = null;
+        if(throwableObject.TryGetComponent<Rigidbody>(out throwableRB)) throwableRB.AddForce(
+            throwForce * PlayerCamera.forward, ForceMode.Impulse
+        );
+    }
+    public void interactWithObjectInSights() {
+        if(!hasGrabbedObject())
+            if(hasPickableInSights() || hasActionableInSights()) getGameObjectInSights().GetComponent<PickableObjectController>().interact(this.gameObject);
+            else if(hasInteractableInSights()) getGameObjectInSights().GetComponent<InteractableObject>().interact();
+    }
+    public void equipOnHand(GameObject item) {
+        handController.equipItem(item);
+    }
+    public void executePrimaryAction(InputActionPhase phase) {
+        if(grabbedObject != null) this.throwGrabbedObject();
+        else if(handController.isEquippedObjectActionable()){
+            if(phase == InputActionPhase.Started)
+                foreach(PrimaryActionableObject obj in handController.equippedItem.GetComponents<PrimaryActionableObject>()) obj.primaryAction_Single();
+            else if(phase == InputActionPhase.Performed)
+                foreach(PrimaryActionableObject obj in handController.equippedItem.GetComponents<PrimaryActionableObject>()) obj.primaryAction_Hold();
+            else
+                foreach(PrimaryActionableObject obj in handController.equippedItem.GetComponents<PrimaryActionableObject>()) obj.primaryAction_Canceled();
+        }
+    }
+    public void executeSecondaryAction(InputActionPhase phase) {
+        if(handController.isEquippedObjectActionable()){
+            if(phase == InputActionPhase.Started)
+                foreach(SecondaryActionableObject obj in handController.equippedItem.GetComponents<SecondaryActionableObject>()) obj.secondaryAction_Single();
+            else if(phase == InputActionPhase.Performed)
+                foreach(SecondaryActionableObject obj in handController.equippedItem.GetComponents<SecondaryActionableObject>()) obj.secondaryAction_Hold();
+            else 
+                foreach(SecondaryActionableObject obj in handController.equippedItem.GetComponents<SecondaryActionableObject>()) obj.secondaryAction_Canceled();
         }
     }
     #endregion

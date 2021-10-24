@@ -22,7 +22,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Interact1",
+                    "name": "Hand Primary Action",
                     "type": "Button",
                     "id": "4d424f62-986d-4808-b8c3-64591748935e",
                     "expectedControlType": "Button",
@@ -38,7 +38,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Interact2",
+                    "name": "Hand Secondary Action",
                     "type": "Button",
                     "id": "affe4606-545b-4d0b-a354-5e4f0d3d48fa",
                     "expectedControlType": "Button",
@@ -46,7 +46,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Interact3",
+                    "name": "Interact",
                     "type": "Button",
                     "id": "c2ffd059-3228-4462-8950-c48fd836f654",
                     "expectedControlType": "Button",
@@ -235,7 +235,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Interact1",
+                    "action": "Hand Primary Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -246,7 +246,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Interact1",
+                    "action": "Hand Primary Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -257,7 +257,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Touch",
-                    "action": "Interact1",
+                    "action": "Hand Primary Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -268,7 +268,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "Interact1",
+                    "action": "Hand Primary Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -279,7 +279,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
-                    "action": "Interact1",
+                    "action": "Hand Primary Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -297,11 +297,11 @@
                 {
                     "name": "",
                     "id": "f5722a38-e7d3-45c2-bc94-1fbaed155655",
-                    "path": "",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Interact2",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Hand Secondary Action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -312,7 +312,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Interact3",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
