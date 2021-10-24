@@ -7,7 +7,7 @@ using TMPro;
 public class InteractionController : MonoBehaviour
 {
     #region Controller Configuration
-    public Transform PlayerCamera;
+    public Transform playerCamera;
     public PlayerInput playerInput;
     public TextMeshProUGUI playerInteractionText;
     public HandController handController;
@@ -34,7 +34,7 @@ public class InteractionController : MonoBehaviour
     #endregion
     void Update() {
         // Only need to keep the first "if" to work properly
-        if(Physics.Raycast(PlayerCamera.position, PlayerCamera.forward, out rayHit, interactionDistanceMax, raycastLayerMask) && !hasGrabbedObject()){
+        if(Physics.Raycast(playerCamera.position, playerCamera.forward, out rayHit, interactionDistanceMax, raycastLayerMask) && !hasGrabbedObject()){
             string objectName = rayHit.transform.name;
             string interactControl = playerInput.actions.FindAction("Interact").GetBindingDisplayString();
             string interactionType = hasPickableInSights() ? "pick up" : "interact with";
@@ -44,7 +44,7 @@ public class InteractionController : MonoBehaviour
         if(grabbedObject != null)
             // HANDLE COMMON OBJECT with rigidbody
             if(grabbedRigidBody != null){
-                Vector3 forwardPoint = PlayerCamera.position + (PlayerCamera.forward * (grabbedDistance - 1f));
+                Vector3 forwardPoint = playerCamera.position + (playerCamera.forward * (grabbedDistance - 1f));
                 if(Vector3.Distance(forwardPoint, grabbedObject.transform.position) <= grabbedDistanceThreshhold){
                     Vector3 vectorDistance = forwardPoint - grabbedObject.transform.position;
                     grabbedRigidBody.AddForce(
@@ -53,7 +53,7 @@ public class InteractionController : MonoBehaviour
                 } else dropGrabbedObject();
             } else
                 // HANDLE UNCOMON OBJECT without rigidbody
-                grabbedObject.transform.position = PlayerCamera.position + (PlayerCamera.forward * (grabbedDistance - 1f));
+                grabbedObject.transform.position = playerCamera.position + (playerCamera.forward * (grabbedDistance - 1f));
     }
     #region Validation Methods
     public bool hasGrabbableInSights() {
@@ -104,7 +104,7 @@ public class InteractionController : MonoBehaviour
         dropGrabbedObject();
         Rigidbody throwableRB = null;
         if(throwableObject.TryGetComponent<Rigidbody>(out throwableRB)) throwableRB.AddForce(
-            throwForce * PlayerCamera.forward, ForceMode.Impulse
+            throwForce * playerCamera.forward, ForceMode.Impulse
         );
     }
     public void interactWithObjectInSights() {
@@ -117,24 +117,10 @@ public class InteractionController : MonoBehaviour
     }
     public void executePrimaryAction(InputActionPhase phase) {
         if(grabbedObject != null) this.throwGrabbedObject();
-        else if(handController.isEquippedObjectActionable()){
-            if(phase == InputActionPhase.Started)
-                foreach(PrimaryActionableObject obj in handController.equippedItem.GetComponents<PrimaryActionableObject>()) obj.primaryAction_Single();
-            else if(phase == InputActionPhase.Performed)
-                foreach(PrimaryActionableObject obj in handController.equippedItem.GetComponents<PrimaryActionableObject>()) obj.primaryAction_Hold();
-            else
-                foreach(PrimaryActionableObject obj in handController.equippedItem.GetComponents<PrimaryActionableObject>()) obj.primaryAction_Canceled();
-        }
+        else handController.executePrimaryAction(phase);
     }
     public void executeSecondaryAction(InputActionPhase phase) {
-        if(handController.isEquippedObjectActionable()){
-            if(phase == InputActionPhase.Started)
-                foreach(SecondaryActionableObject obj in handController.equippedItem.GetComponents<SecondaryActionableObject>()) obj.secondaryAction_Single();
-            else if(phase == InputActionPhase.Performed)
-                foreach(SecondaryActionableObject obj in handController.equippedItem.GetComponents<SecondaryActionableObject>()) obj.secondaryAction_Hold();
-            else 
-                foreach(SecondaryActionableObject obj in handController.equippedItem.GetComponents<SecondaryActionableObject>()) obj.secondaryAction_Canceled();
-        }
+        handController.executeSecondaryAction(phase);
     }
     #endregion
 }

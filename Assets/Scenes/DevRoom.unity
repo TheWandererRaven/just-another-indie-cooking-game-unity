@@ -987,8 +987,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef265c43d972bcb4ba6d867319488da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  equippedItem: {fileID: 0}
-  dropDistanceForward: 0.5
 --- !u!1 &621467502
 GameObject:
   m_ObjectHideFlags: 0
@@ -1523,7 +1521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f180780dcf20794b96bcc919de7e7f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerCamera: {fileID: 34641126}
+  playerCamera: {fileID: 34641126}
   playerInput: {fileID: 1114616375}
   playerInteractionText: {fileID: 493102166}
   handController: {fileID: 556554148}
