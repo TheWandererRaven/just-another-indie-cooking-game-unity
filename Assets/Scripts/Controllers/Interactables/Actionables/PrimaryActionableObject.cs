@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface PrimaryActionableObject
 {
-    void primaryAction_Single();
+    void primaryAction_Start();
     void primaryAction_Hold();
-    void primaryAction_Canceled();
+    void primaryAction_Cancel();
 }

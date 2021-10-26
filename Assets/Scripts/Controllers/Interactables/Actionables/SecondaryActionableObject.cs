@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface SecondaryActionableObject
 {
-    void secondaryAction_Single();
+    void secondaryAction_Start();
     void secondaryAction_Hold();
-    void secondaryAction_Canceled();
+    void secondaryAction_Cancel();
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class HandController : MonoBehaviour
 {
@@ -34,5 +35,23 @@ public class HandController : MonoBehaviour
         Rigidbody equippedRB;
         if(equippedItem.TryGetComponent<Rigidbody>(out equippedRB)) equippedRB.constraints = equippedOriginalRBContraints;
         equippedItem = null;
+    }
+    public void executePrimaryAction(InputActionPhase phase) {
+        if(isEquippedObjectActionable())
+            if(phase == InputActionPhase.Started)
+                foreach(PrimaryActionableObject obj in equippedItem.GetComponents<PrimaryActionableObject>()) obj.primaryAction_Start();
+            else if(phase == InputActionPhase.Performed)
+                foreach(PrimaryActionableObject obj in equippedItem.GetComponents<PrimaryActionableObject>()) obj.primaryAction_Hold();
+            else
+                foreach(PrimaryActionableObject obj in equippedItem.GetComponents<PrimaryActionableObject>()) obj.primaryAction_Cancel();
+    }
+    public void executeSecondaryAction(InputActionPhase phase) {
+        if(isEquippedObjectActionable())
+            if(phase == InputActionPhase.Started)
+                foreach(SecondaryActionableObject obj in equippedItem.GetComponents<SecondaryActionableObject>()) obj.secondaryAction_Start();
+            else if(phase == InputActionPhase.Performed)
+                foreach(SecondaryActionableObject obj in equippedItem.GetComponents<SecondaryActionableObject>()) obj.secondaryAction_Hold();
+            else 
+                foreach(SecondaryActionableObject obj in equippedItem.GetComponents<SecondaryActionableObject>()) obj.secondaryAction_Cancel();
     }
 }
