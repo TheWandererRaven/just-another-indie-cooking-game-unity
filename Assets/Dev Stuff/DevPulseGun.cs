@@ -8,7 +8,7 @@ public class DevPulseGun : EquippableObject, PrimaryActionableObject
     public float pulseForce = 10f;
     public float pulseRadius = 2f;
     private bool isRepelling = false;
-    public void primaryAction_Single()
+    public void primaryAction_Start()
     {
         isRepelling = true;
     }
@@ -16,7 +16,7 @@ public class DevPulseGun : EquippableObject, PrimaryActionableObject
     {
 
     }
-    public void primaryAction_Canceled()
+    public void primaryAction_Cancel()
     {
         isRepelling = false;
     }

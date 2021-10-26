@@ -19,7 +19,7 @@ public class DevGunController : EquippableObject, ActionableObject
     {
         
     }
-    public void primaryAction_Single()
+    public void primaryAction_Start()
     {
         shootSingleBullet();
         //Invoke("shootSingleBullet", 1/bulletsPerSecond);
@@ -28,16 +28,16 @@ public class DevGunController : EquippableObject, ActionableObject
     {
         print("taka taka taka");
     }
-    public void primaryAction_Canceled()
+    public void primaryAction_Cancel()
     {
         print("Shooting stopped");
     }
-    public void secondaryAction_Single() {
+    public void secondaryAction_Start() {
         isShootingMultiple = true;
         shootMultipleBullets();
     }
     public void secondaryAction_Hold() {}
-    public void secondaryAction_Canceled() {
+    public void secondaryAction_Cancel() {
         isShootingMultiple = false;
     }
     private void shootSingleBullet() {
