@@ -5,43 +5,75 @@ using UnityEngine;
 public class InventoryController : MonoBehaviour
 {
     public byte invetorySize = 5;
-    public InventoryItemObject[] Items;
+    public InventorySlotObject[] Slots;
     void Start() {
-        Items = new InventoryItemObject[invetorySize];
+        GenerateInventory();
     }
     void Update() {
-        
+        string printableInv = "";
+        foreach(InventorySlotObject slot in Slots) printableInv += $" [{slot.DisplayName}: {slot.Count}/{slot.MaxCount}] ";
+        print(printableInv);
     }
-    public InventoryItemObject addToStorage(InventoryItemObject item) {
-        for(int i = 0; i < invetorySize; i++) {
-            if(Items[i] == null) {
-                Items[i] = item;
-                break;
-            } else if(Items[i].Name.Equals(item.Name)) {
-                short leftoverCount = Items[i].addToStack(item.Count);
-                if(leftoverCount > 0) {
-                    item.Count = leftoverCount;
-                    return item;
-                } else break;
+    public void GenerateInventory() {
+        Slots = new InventorySlotObject[invetorySize];
+        for(int i = 0; i < Slots.Length; i++) {
+            Slots[i] = new InventorySlotObject();
+        }
+    }
+    public short addToStorage(GameObject item) {
+        // item must have PickableOjbect controller
+        short leftoverCount = 0;
+        PickableObjectController pickableController = null;
+        if(item.TryGetComponent<PickableObjectController>(out pickableController)){
+            leftoverCount = pickableController.Count;
+            for(int i = 0; i < invetorySize; i++) {
+                 if(Slots[i].Name.Equals(pickableController.Name) && Slots[i].Count < Slots[i].MaxCount) {
+                    leftoverCount = Slots[i].addToStack(pickableController.Count);
+                    break;
+                } else if(Slots[i].Name.Equals("")) {
+                    Slots[i].addNewItem(pickableController.Name, pickableController.Count, pickableController.MaxCount);
+                    leftoverCount = 0;
+                    break;
+                } 
             }
         }
-        return null;
+        return leftoverCount;
     }
-    public InventoryItemObject removeFromStorage(int position, int amount) {
-        InventoryItemObject removedItem = null;
-        if(position < this.invetorySize) if(Items[position] != null) {
-            removedItem = Items[position];
-            Items[position] = null;
+    public short addToStorage(string Name, short Count, short MaxStorage = 999) {
+        short leftoverCount = Count;
+        for(int i = 0; i < invetorySize; i++) {
+            if(Slots[i].Name.Equals(Name) && Slots[i].Count < Slots[i].MaxCount) {
+                leftoverCount = Slots[i].addToStack(Count);
+                break;
+            } else if(Slots[i].Name.Equals("")) {
+                Slots[i].addNewItem(Name, Count, MaxStorage);
+                leftoverCount = 0;
+                break;
+            } 
         }
-        return removedItem;
+        return leftoverCount;
+    }
+    public string removeFromStorage(int position, short amount, out short removedAmount) {
+        string removedItemName = "";
+        removedAmount = 0;
+        if(position < this.invetorySize) if(Slots[position] != null) {
+            removedItemName = Slots[position].Name;
+            if(Slots[position].Count <= amount) {
+                removedAmount = Slots[position].Count;
+                Slots[position].emptySlot();
+            } else {
+                removedAmount = amount;
+                Slots[position].removeFromStack(amount);
+            }
+        }
+        return removedItemName;
     }
     public void moveStoragePosition(int prevPosition, int newPosition) {
-        if(prevPosition < this.invetorySize && newPosition < this.invetorySize) if(Items[prevPosition] != null) {
-            InventoryItemObject itemToMove = Items[prevPosition];
-            InventoryItemObject itemToReplace = null;
-            if(Items[newPosition] != null) itemToReplace = Items[newPosition];
-            Items[newPosition] = itemToMove;
-            Items[prevPosition] = itemToReplace;
+        if(prevPosition < this.invetorySize && newPosition < this.invetorySize) if(Slots[prevPosition] != null) {
+            InventorySlotObject itemToMove = Slots[prevPosition];
+            InventorySlotObject itemToReplace = Slots[newPosition];
+            Slots[newPosition] = itemToMove;
+            Slots[prevPosition] = itemToReplace;
         }
     }
 }

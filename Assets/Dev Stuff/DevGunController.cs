@@ -9,16 +9,6 @@ public class DevGunController : EquippableObject, ActionableObject
     public float shootingForceMagnitude = 5f;
     public float bulletsPerSecond = 1f;
     private bool isShootingMultiple = false;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void primaryAction_Start()
     {
         shootSingleBullet();
