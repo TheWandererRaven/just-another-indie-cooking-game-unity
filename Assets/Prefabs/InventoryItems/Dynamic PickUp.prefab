@@ -111,6 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Orange Cylinder
+  DisplayName: Pickable Object
   Count: 1
   MaxCount: 99
 --- !u!54 &152173833788626300

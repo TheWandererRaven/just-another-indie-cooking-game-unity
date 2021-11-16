@@ -62,7 +62,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Inventory",
+                    "name": "Toggle Inventory Screen",
                     "type": "Button",
                     "id": "abdd87eb-43e1-4a12-a1e3-4622e8b60c14",
                     "expectedControlType": "Button",
@@ -342,7 +342,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Inventory",
+                    "action": "Toggle Inventory Screen",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

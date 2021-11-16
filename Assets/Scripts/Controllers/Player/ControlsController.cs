@@ -11,6 +11,8 @@ public class ControlsController : MonoBehaviour
     public CharacterController playerController;
     public CameraController cameraController;
     public InteractionController interactionController;
+    public GameObject hudScreen;
+    public GameObject inventoryScreen;
     public float walkingSpeedUnitsPerSecond = 1.0f;
     public float walkingSpeedMax = 1.0f;
     public float crouchingSpeedUnitsPerSecond = 0.5f;
@@ -29,6 +31,8 @@ public class ControlsController : MonoBehaviour
     private bool isCrouching = false;
     private Vector3 walkingInputs = new Vector3(0, 0, 0);
     private Vector2 lookingInputs = new Vector2(0, 0);
+    private bool freezeMovment = false;
+    private bool freezeCamera = false;
     #endregion
     void Start()
     {
@@ -39,11 +43,13 @@ public class ControlsController : MonoBehaviour
     void Update()
     {
         // ##################################### WALKING MOVEMENT #####################################
-        playerController.SimpleMove(calculateMovementSpeed());
+        if(!freezeMovment) playerController.SimpleMove(calculateMovementSpeed());
 
         // ##################################### LOOK MOVEMENT #####################################
-        if(Cursor.lockState != CursorLockMode.None) playerMovement.rotateDirectionally(lookingInputs.x, 0);
-        if(Cursor.lockState != CursorLockMode.None) cameraController.rotateVertically(lookingInputs.y * -1);
+        if(!freezeCamera) {
+            if(Cursor.lockState != CursorLockMode.None) playerMovement.rotateDirectionally(lookingInputs.x, 0);
+            if(Cursor.lockState != CursorLockMode.None) cameraController.rotateVertically(lookingInputs.y * -1);
+        }
 
         /*
         // ##################################### INTERACT HANDLER #####################################
@@ -120,6 +126,15 @@ public class ControlsController : MonoBehaviour
             interactionController.grabObjectInSights();
         else if(context.canceled)
             if(interactionController.grabbedObject != null) interactionController.dropGrabbedObject();
+    }
+    public void toggleInventoryScreen(InputAction.CallbackContext context) {
+        if(context.canceled) {
+            hudScreen.SetActive(inventoryScreen.activeSelf);
+            inventoryScreen.SetActive(!inventoryScreen.activeSelf);
+            if(inventoryScreen.activeSelf) Cursor.lockState = CursorLockMode.None;
+            else Cursor.lockState = CursorLockMode.Locked;
+        }
+
     }
     #endregion
 }

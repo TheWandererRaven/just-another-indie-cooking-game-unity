@@ -36,7 +36,7 @@ public class InteractionController : MonoBehaviour
     void Update() {
         // Only need to keep the first "if" to work properly
         if(Physics.Raycast(playerCamera.position, playerCamera.forward, out rayHit, interactionDistanceMax, raycastLayerMask) && !hasGrabbedObject()){
-            string objectName = rayHit.transform.name;
+            string objectName = hasPickableInSights() ? rayHit.transform.GetComponent<PickableObjectController>().DisplayName : rayHit.transform.name;
             string interactControl = playerInput.actions.FindAction("Interact").GetBindingDisplayString();
             string interactionType = hasPickableInSights() ? "pick up" : "interact with";
             playerInteractionText.text = hasGrabbableInSights() ? "" : $"Press {interactControl} to {interactionType} {objectName}";

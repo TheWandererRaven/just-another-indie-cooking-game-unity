@@ -111,6 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Rare Orange Cylinder
+  DisplayName: Rare Object
   Count: 1
   MaxCount: 20
 --- !u!54 &4741901492865629169

@@ -111,6 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Legendary Orange Cylinder
+  DisplayName: Legendary Object
   Count: 1
   MaxCount: 5
 --- !u!54 &9041316848994051133

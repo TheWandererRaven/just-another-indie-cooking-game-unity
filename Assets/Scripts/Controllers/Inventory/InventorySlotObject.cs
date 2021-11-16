@@ -6,6 +6,7 @@ public class InventorySlotObject
 {
     public string Name = "";
     public string DisplayName = "";
+    public string PrefabName = "";
     public short Count = 0;
     public short MaxCount = 0;
     public InventorySlotObject() {
@@ -17,14 +18,17 @@ public class InventorySlotObject
     public void addNewItem(string Name, short Count) {
         this.addNewItem(Name, Name, Count);
     }
-    public void addNewItem(string Name, string DisplayName, short Count) {
-        this.addNewItem(Name, DisplayName, Count);
+    public void addNewItem(string Name, string PrefabName, short Count, short MaxCount=99) {
+        // Set Display Name to be the Prefab Name
+        this.addNewItem(Name, PrefabName, PrefabName, Count, MaxCount:MaxCount);
     }
     public void addNewItem(string Name, short Count, short MaxCount) {
-        this.addNewItem(Name, Name, Count, MaxCount);
+        // Set both the Display, Prefab and Item Name to all be the same
+        this.addNewItem(Name, Name, Name, Count, MaxCount);
     }
-    public void addNewItem(string Name, string DisplayName, short Count, short MaxCount=99) {
+    public void addNewItem(string Name, string PrefabName, string DisplayName, short Count, short MaxCount=99) {
         this.Name = Name;
+        this.PrefabName = PrefabName;
         this.DisplayName = DisplayName;
         this.Count = Count;
         this.MaxCount = MaxCount;

@@ -1,16 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryUIController : MonoBehaviour
 {
     public GameObject InventorySlotDisplayPrefab = null;
     public GameObject InventoryContainerDisplay = null;
     public InventoryController playerInventory = null;
+    public ItemsCatalogController itemsCatalog = null;
+    private List<GameObject> inventorySlots = new List<GameObject>();
     // Start is called before the first frame update
-    void Start()
+    void OnDisable()
     {
-        GenerateInventoryUIDisplay();
+        Debug.Log("PrintOnDisable: script was disabled");
+    }
+
+    void OnEnable()
+    {
+        if(inventorySlots.Count <= 0) GenerateInventoryUIDisplay();
+        LoadPlayerInventory();
     }
     void GenerateInventoryUIDisplay() {
         int colNum = Mathf.CeilToInt(Mathf.Sqrt(playerInventory.invetorySize));
@@ -42,14 +52,23 @@ public class InventoryUIController : MonoBehaviour
                     1 - (xy1.y / InventoryContainerDisplayRect.height)
                 );
                 cellNum += 1;
+                inventorySlots.Add(newSlot);
             }
     }
-    public void DisplayPlayerInventory() {
-
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void LoadPlayerInventory() {
+        // Read with for loop each slot in player inventory and for each i position, in the UI slots, retrieve the sprite from the catalog and then generate sprite object on slot display
+        for(int i = 0; i < playerInventory.invetorySize; i++) {
+                RawImage icon = inventorySlots[i].GetComponentInChildren<RawImage>();
+                TextMeshProUGUI itemCountText = inventorySlots[i].GetComponentInChildren<TextMeshProUGUI>();
+            if(!playerInventory.Slots[i].Name.Equals("")) {
+                icon.texture = itemsCatalog.getItemSprite(playerInventory.Slots[i].Name);
+                icon.color = Color.white;
+                itemCountText.text = playerInventory.Slots[i].Count.ToString();
+            } else {
+                icon.texture = null;
+                icon.color = new Color(1, 1, 1, 0);
+                itemCountText.text = "";
+            }
+        }
     }
 }
