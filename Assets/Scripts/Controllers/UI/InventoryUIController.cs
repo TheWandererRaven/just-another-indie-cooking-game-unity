@@ -10,21 +10,21 @@ public class InventoryUIController : MonoBehaviour
     public GameObject InventoryContainerDisplay = null;
     public InventoryController playerInventory = null;
     public ItemsCatalogController itemsCatalog = null;
+    public Color SlotColor = Color.white;
+    public Color HotbarColor = Color.white;
     private List<GameObject> inventorySlots = new List<GameObject>();
     // Start is called before the first frame update
     void OnDisable()
     {
         Debug.Log("PrintOnDisable: script was disabled");
     }
-
     void OnEnable()
     {
         if(inventorySlots.Count <= 0) GenerateInventoryUIDisplay();
         LoadPlayerInventory();
     }
     void GenerateInventoryUIDisplay() {
-        int colNum = Mathf.CeilToInt(Mathf.Sqrt(playerInventory.invetorySize));
-        int rowNum = Mathf.CeilToInt(((float)playerInventory.invetorySize)/colNum);
+        (int colNum, int rowNum) = CalculationsHelper.CalculateInventoryColRowNumSize(playerInventory.inventorySize);
         Rect InventoryContainerDisplayRect = InventoryContainerDisplay.GetComponent<RectTransform>().rect;
         float slotWidth = InventoryContainerDisplayRect.width / (colNum + 1);
         float slotHeight = InventoryContainerDisplayRect.height / (rowNum + 1);
@@ -32,7 +32,7 @@ public class InventoryUIController : MonoBehaviour
         float verticalSpacing = slotHeight / (rowNum + 1);
         int cellNum = 0;
         for(int i = 0; i < rowNum; i++)
-            for(int j = 0; j < colNum && cellNum < playerInventory.invetorySize; j++) {
+            for(int j = 0; j < colNum && cellNum < playerInventory.inventorySize; j++) {
                 GameObject newSlot = Instantiate(InventorySlotDisplayPrefab, InventoryContainerDisplay.transform);
                 RectTransform newSlotRect = newSlot.GetComponent<RectTransform>();
                 Vector2 xy1 = new Vector2(
@@ -51,13 +51,16 @@ public class InventoryUIController : MonoBehaviour
                     xy2.x / InventoryContainerDisplayRect.width,
                     1 - (xy1.y / InventoryContainerDisplayRect.height)
                 );
+                Image SlotBaseImage = newSlot.GetComponent<Image>();
+                if(cellNum < playerInventory.hotbarSize) SlotBaseImage.color = HotbarColor;
+                else SlotBaseImage.color = SlotColor;
                 cellNum += 1;
                 inventorySlots.Add(newSlot);
             }
     }
     public void LoadPlayerInventory() {
         // Read with for loop each slot in player inventory and for each i position, in the UI slots, retrieve the sprite from the catalog and then generate sprite object on slot display
-        for(int i = 0; i < playerInventory.invetorySize; i++) {
+        for(int i = 0; i < playerInventory.inventorySize; i++) {
                 RawImage icon = inventorySlots[i].GetComponentInChildren<RawImage>();
                 TextMeshProUGUI itemCountText = inventorySlots[i].GetComponentInChildren<TextMeshProUGUI>();
             if(!playerInventory.Slots[i].Name.Equals("")) {

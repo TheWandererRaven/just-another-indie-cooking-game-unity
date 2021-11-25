@@ -763,13 +763,14 @@ RectTransform:
   m_Children:
   - {fileID: 493102165}
   - {fileID: 1858031099}
+  - {fileID: 578161890}
   m_Father: {fileID: 1212813097}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &305385950
 GameObject:
@@ -1053,8 +1054,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: -93.5}
-  m_SizeDelta: {x: 268, y: 50}
+  m_AnchoredPosition: {x: 0, y: 100}
+  m_SizeDelta: {x: -100, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &493102166
 MonoBehaviour:
@@ -1255,6 +1256,98 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b23e23883fe3666498e39f8c87460c56, type: 3}
+--- !u!1 &578161889
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 578161890}
+  - component: {fileID: 578161892}
+  - component: {fileID: 578161891}
+  - component: {fileID: 578161893}
+  m_Layer: 5
+  m_Name: Hotbar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &578161890
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578161889}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 304063473}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.015, y: 0.015}
+  m_AnchorMax: {x: 0.985, y: 0.15}
+  m_AnchoredPosition: {x: 1.5, y: 1.5000305}
+  m_SizeDelta: {x: 3, y: -3}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &578161891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578161889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 0.92156863}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &578161892
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578161889}
+  m_CullTransparentMesh: 1
+--- !u!114 &578161893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578161889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e2abe296c4036140991743cf451087a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HotbarSlotDisplayPrefab: {fileID: 7081535457011197899, guid: afb824288da873f418e58c98b718d43a, type: 3}
+  HotbarContainerDisplay: {fileID: 578161889}
+  playerInventory: {fileID: 952959567}
+  itemsCatalog: {fileID: 1218918610}
 --- !u!1 &621467502
 GameObject:
   m_ObjectHideFlags: 0
@@ -1808,7 +1901,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cc4937cb1b735147aa2b609b3c13f0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  invetorySize: 20
+  inventorySize: 20
+  hotbarSize: 10
 --- !u!1001 &1014230205
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2064,6 +2158,7 @@ MonoBehaviour:
   playerCamera: {fileID: 34641126}
   playerInput: {fileID: 1114616375}
   playerInteractionText: {fileID: 493102166}
+  hotbarUIController: {fileID: 578161893}
   handController: {fileID: 556554148}
   inventoryController: {fileID: 952959567}
   interactionDistanceMax: 2
@@ -3820,7 +3915,7 @@ GameObject:
   - component: {fileID: 1858031101}
   - component: {fileID: 1858031100}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: Crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3993,6 +4088,8 @@ MonoBehaviour:
   InventoryContainerDisplay: {fileID: 2061075996}
   playerInventory: {fileID: 952959567}
   itemsCatalog: {fileID: 1218918610}
+  SlotColor: {r: 1, g: 1, b: 1, a: 0.88235295}
+  HotbarColor: {r: 1, g: 0.9367925, b: 0.6839622, a: 0.8627451}
 --- !u!1001 &1917437037
 PrefabInstance:
   m_ObjectHideFlags: 0

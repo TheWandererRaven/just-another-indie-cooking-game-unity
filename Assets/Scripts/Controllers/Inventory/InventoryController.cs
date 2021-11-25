@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class InventoryController : MonoBehaviour
 {
-    public byte invetorySize = 5;
+    public byte inventorySize = 5;
+    public byte hotbarSize = 3;
     public InventorySlotObject[] Slots;
     void Start() {
+        if(hotbarSize > inventorySize) hotbarSize = inventorySize;
         GenerateInventory();
     }
     void Update() {
         string printableInv = "";
         foreach(InventorySlotObject slot in Slots) printableInv += $" [{slot.DisplayName}: {slot.Count}/{slot.MaxCount}] ";
-        print(printableInv);
     }
     public void GenerateInventory() {
-        Slots = new InventorySlotObject[invetorySize];
+        Slots = new InventorySlotObject[inventorySize];
         for(int i = 0; i < Slots.Length; i++) {
             Slots[i] = new InventorySlotObject();
         }
@@ -26,7 +27,7 @@ public class InventoryController : MonoBehaviour
         PickableObjectController pickableController = null;
         if(item.TryGetComponent<PickableObjectController>(out pickableController)){
             leftoverCount = pickableController.Count;
-            for(int i = 0; i < invetorySize; i++) {
+            for(int i = 0; i < inventorySize; i++) {
                  if(Slots[i].Name.Equals(pickableController.Name) && Slots[i].Count < Slots[i].MaxCount) {
                     leftoverCount = Slots[i].addToStack(pickableController.Count);
                     break;
@@ -47,7 +48,7 @@ public class InventoryController : MonoBehaviour
     }
     public short addToStorage(string Name, string PrefabName, string DisplayName, short Count, short MaxStorage = 999) {
         short leftoverCount = Count;
-        for(int i = 0; i < invetorySize; i++) {
+        for(int i = 0; i < inventorySize; i++) {
             if(Slots[i].Name.Equals(Name) && Slots[i].Count < Slots[i].MaxCount) {
                 leftoverCount = Slots[i].addToStack(Count);
                 break;
@@ -62,7 +63,7 @@ public class InventoryController : MonoBehaviour
     public string removeFromStorage(int position, short amount, out short removedAmount) {
         string removedItemName = "";
         removedAmount = 0;
-        if(position < this.invetorySize) if(Slots[position] != null) {
+        if(position < this.inventorySize) if(Slots[position] != null) {
             removedItemName = Slots[position].Name;
             if(Slots[position].Count <= amount) {
                 removedAmount = Slots[position].Count;
@@ -75,7 +76,7 @@ public class InventoryController : MonoBehaviour
         return removedItemName;
     }
     public void moveStoragePosition(int prevPosition, int newPosition) {
-        if(prevPosition < this.invetorySize && newPosition < this.invetorySize) if(Slots[prevPosition] != null) {
+        if(prevPosition < this.inventorySize && newPosition < this.inventorySize) if(Slots[prevPosition] != null) {
             InventorySlotObject itemToMove = Slots[prevPosition];
             InventorySlotObject itemToReplace = Slots[newPosition];
             Slots[newPosition] = itemToMove;
