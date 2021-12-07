@@ -5,9 +5,9 @@ using UnityEngine;
 public class ItemsCatalogController : MonoBehaviour
 {
     public GameObject[] itemsCatalog;
-    public Texture[] imagesCatalog;
+    public Sprite[] imagesCatalog;
     public GameObject defaultItem;
-    public Texture defaultTexture;
+    public Sprite defaultSprite;
     private Dictionary<string, GameObject> _itemsCatalog = new Dictionary<string, GameObject>();
     void Start() {
         foreach(GameObject item in itemsCatalog) _itemsCatalog.Add(item.name, item);
@@ -17,10 +17,10 @@ public class ItemsCatalogController : MonoBehaviour
         _itemsCatalog.TryGetValue(name, out returnValue);
         return returnValue;
     }
-    public Texture getItemSprite(string name) {
-        Texture returnTexture = defaultTexture;
-        foreach(Texture sprt in imagesCatalog) if(sprt.name.Equals(name)) returnTexture = sprt;
-        foreach(Texture sprt in imagesCatalog) print($"{sprt.name}  <-->  {name}");
-        return returnTexture;
+    public Sprite getItemSprite(string name) {
+        Sprite returnSprite = defaultSprite;
+        foreach(Sprite sprt in imagesCatalog) if(sprt.name.Equals(name)) returnSprite = sprt;
+        foreach(Sprite sprt in imagesCatalog) print($"{sprt.name}  <-->  {name}");
+        return returnSprite;
     }
 }

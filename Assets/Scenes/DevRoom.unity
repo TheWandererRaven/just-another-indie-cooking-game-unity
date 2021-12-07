@@ -2796,12 +2796,12 @@ MonoBehaviour:
   - {fileID: 2513637225117344395, guid: 167ba1bc9fc84a842b38ef2f75f8cd93, type: 3}
   - {fileID: 152173833788626294, guid: 16bef0f026b51a0469ed30beb11cc74a, type: 3}
   imagesCatalog:
-  - {fileID: 2800000, guid: a36565afbefd09e43951d7b150491c51, type: 3}
-  - {fileID: 2800000, guid: 0c9b1213f7fbe7d459eaadefe27e785a, type: 3}
-  - {fileID: 2800000, guid: 168ba53753e24114499ed72ad0803414, type: 3}
-  - {fileID: 2800000, guid: b0290dc418cecdb42a3d96db2de4bc7e, type: 3}
+  - {fileID: 21300000, guid: 168ba53753e24114499ed72ad0803414, type: 3}
+  - {fileID: 21300000, guid: 0c9b1213f7fbe7d459eaadefe27e785a, type: 3}
+  - {fileID: 21300000, guid: b0290dc418cecdb42a3d96db2de4bc7e, type: 3}
+  - {fileID: 21300000, guid: a36565afbefd09e43951d7b150491c51, type: 3}
   defaultItem: {fileID: 7163527456425810475, guid: 6159a7fad9504e348a3fb1a49e9bd161, type: 3}
-  defaultTexture: {fileID: 2800000, guid: 6695d73059679324480507edc417d4f3, type: 3}
+  defaultSprite: {fileID: 21300000, guid: 6695d73059679324480507edc417d4f3, type: 3}
 --- !u!1 &1265666031
 GameObject:
   m_ObjectHideFlags: 0

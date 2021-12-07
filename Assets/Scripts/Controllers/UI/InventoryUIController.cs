@@ -51,9 +51,12 @@ public class InventoryUIController : MonoBehaviour
                     xy2.x / InventoryContainerDisplayRect.width,
                     1 - (xy1.y / InventoryContainerDisplayRect.height)
                 );
-                Image SlotBaseImage = newSlot.GetComponent<Image>();
-                if(cellNum < playerInventory.hotbarSize) SlotBaseImage.color = HotbarColor;
-                else SlotBaseImage.color = SlotColor;
+                ItemSlotUIController slotController;
+                if(newSlot.TryGetComponent<ItemSlotUIController>(out slotController))
+                    slotController.initializeSlot(
+                        cellNum + 1,
+                        cellNum < playerInventory.hotbarSize ? HotbarColor : SlotColor
+                    );
                 cellNum += 1;
                 inventorySlots.Add(newSlot);
             }
@@ -61,17 +64,21 @@ public class InventoryUIController : MonoBehaviour
     public void LoadPlayerInventory() {
         // Read with for loop each slot in player inventory and for each i position, in the UI slots, retrieve the sprite from the catalog and then generate sprite object on slot display
         for(int i = 0; i < playerInventory.inventorySize; i++) {
-                RawImage icon = inventorySlots[i].GetComponentInChildren<RawImage>();
-                TextMeshProUGUI itemCountText = inventorySlots[i].GetComponentInChildren<TextMeshProUGUI>();
-            if(!playerInventory.Slots[i].Name.Equals("")) {
-                icon.texture = itemsCatalog.getItemSprite(playerInventory.Slots[i].Name);
-                icon.color = Color.white;
-                itemCountText.text = playerInventory.Slots[i].Count.ToString();
-            } else {
-                icon.texture = null;
-                icon.color = new Color(1, 1, 1, 0);
-                itemCountText.text = "";
-            }
+            ItemSlotUIController itemSlot;
+            if(inventorySlots[i].TryGetComponent<ItemSlotUIController>(out itemSlot))
+                if(!playerInventory.Slots[i].Name.Equals("")) {
+                    itemSlot.UpdateData(
+                        playerInventory.Slots[i].Count,
+                        itemsCatalog.getItemSprite(playerInventory.Slots[i].Name),
+                        Color.white
+                    );
+                } else {
+                    itemSlot.UpdateData(
+                        0,
+                        null,
+                        new Color(1, 1, 1, 0)
+                    );
+                }
         }
     }
 }

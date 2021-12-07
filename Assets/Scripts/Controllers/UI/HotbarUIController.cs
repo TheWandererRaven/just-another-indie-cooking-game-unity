@@ -38,21 +38,34 @@ public class HotbarUIController : MonoBehaviour
                 newSlotRect.anchorMin.x + slotSide,
                 0.9f
             );
+            ItemSlotUIController slotController;
+            if(newSlot.TryGetComponent<ItemSlotUIController>(out slotController))
+                slotController.initializeSlot(i + 1);
             hotbarSlots.Add(newSlot);
         }
     }
     public void RefreshItemsIcons() {
         for(int i = 0; i < playerInventory.hotbarSize; i++) {
-                RawImage icon = hotbarSlots[i].GetComponentInChildren<RawImage>();
-                TextMeshProUGUI itemCountText = hotbarSlots[i].GetComponentInChildren<TextMeshProUGUI>();
-            if(!playerInventory.Slots[i].Name.Equals("")) {
-                icon.texture = itemsCatalog.getItemSprite(playerInventory.Slots[i].Name);
-                icon.color = Color.white;
-                itemCountText.text = playerInventory.Slots[i].Count.ToString();
-            } else {
-                icon.texture = null;
-                icon.color = new Color(1, 1, 1, 0);
-                itemCountText.text = "";
+            ItemSlotUIController slotController;
+            if(hotbarSlots[i].TryGetComponent<ItemSlotUIController>(out slotController))
+                if(!playerInventory.Slots[i].Name.Equals("")) {
+                    slotController.UpdateData(
+                        playerInventory.Slots[i].Count,
+                        itemsCatalog.getItemSprite(playerInventory.Slots[i].Name),
+                        Color.white
+                    );
+                    //icon.texture = itemsCatalog.getItemSprite(playerInventory.Slots[i].Name);
+                    //icon.color = Color.white;
+                    //itemCountText.text = playerInventory.Slots[i].Count.ToString();
+                } else {
+                    slotController.UpdateData(
+                        0,
+                        null,
+                        new Color(1, 1, 1, 0)
+                    );
+                    //icon.texture = null;
+                    //icon.color = new Color(1, 1, 1, 0);
+                    //itemCountText.text = "";
             }
         }
     }
