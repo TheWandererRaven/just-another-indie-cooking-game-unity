@@ -18,15 +18,12 @@ public class HotbarUIController : MonoBehaviour
     }
     void OnEnable()
     {
-        //if(hotbarSlots.Count <= 0) GenerateHotbarUIDisplay();
-        RefreshItemsIcons();
+        if(hotbarSlots.Count > 0) RefreshItemsIcons();
     }
     void GenerateHotbarUIDisplay() {
         Rect InventoryContainerDisplayRect = HotbarContainerDisplay.GetComponent<RectTransform>().rect;
         float slotSide = (InventoryContainerDisplayRect.height * 0.8f) / InventoryContainerDisplayRect.width;
         float horizontalSpacing = (1 - (slotSide * playerInventory.hotbarSize)) / (playerInventory.hotbarSize + 1);
-        print(slotSide);
-        print(horizontalSpacing);
         for(int i = 0; i < playerInventory.hotbarSize; i++) {
             GameObject newSlot = Instantiate(HotbarSlotDisplayPrefab, HotbarContainerDisplay.transform);
             RectTransform newSlotRect = newSlot.GetComponent<RectTransform>();

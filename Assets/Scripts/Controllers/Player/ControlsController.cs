@@ -48,7 +48,7 @@ public class ControlsController : MonoBehaviour
         // ##################################### LOOK MOVEMENT #####################################
         if(!freezeCamera) {
             if(Cursor.lockState != CursorLockMode.None) playerMovement.rotateDirectionally(lookingInputs.x, 0);
-            if(Cursor.lockState != CursorLockMode.None) cameraController.rotateVertically(lookingInputs.y * -1);
+            if(Cursor.lockState != CursorLockMode.None) cameraController.RotateVertically(lookingInputs.y * -1);
         }
 
         /*
@@ -107,7 +107,7 @@ public class ControlsController : MonoBehaviour
             if(isCrouching && playerController.radius > crouchingSize/2) playerController.radius = crouchingSize/2;
             else if(playerController.radius != standingRadius) playerController.radius = standingRadius;
 
-            cameraController.crouch(isCrouching ? crouchingSize : standingSize);
+            cameraController.Crouch(isCrouching ? crouchingSize : standingSize);
         }
     }
     public void handPrimaryAction(InputAction.CallbackContext context) {

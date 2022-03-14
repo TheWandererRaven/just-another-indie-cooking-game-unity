@@ -7,14 +7,14 @@ public class CameraController : MonoBehaviour
     public float verticalRotationLimitMin = -75f;
     public float verticalRotationLimitMax = 75f;
     private float verticalRotation = 0f;
-    public void rotateVertically(float addRotation) {
+    public void RotateVertically(float addRotation) {
         float newRotation = verticalRotation + addRotation;
         if(newRotation <= verticalRotationLimitMax && newRotation >= verticalRotationLimitMin){
             verticalRotation = newRotation;
             this.transform.Rotate(new Vector3(addRotation, 0, 0), Space.Self);
         }
     }
-    public void crouch(float newHeight) {
+    public void Crouch(float newHeight) {
         this.transform.localPosition = new Vector3(this.transform.localPosition.x, newHeight, this.transform.localPosition.z);
     }
 }

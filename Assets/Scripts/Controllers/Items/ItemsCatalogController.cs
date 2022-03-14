@@ -20,7 +20,6 @@ public class ItemsCatalogController : MonoBehaviour
     public Sprite getItemSprite(string name) {
         Sprite returnSprite = defaultSprite;
         foreach(Sprite sprt in imagesCatalog) if(sprt.name.Equals(name)) returnSprite = sprt;
-        foreach(Sprite sprt in imagesCatalog) print($"{sprt.name}  <-->  {name}");
         return returnSprite;
     }
 }
