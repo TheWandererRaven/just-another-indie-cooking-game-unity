@@ -45,6 +45,7 @@ public class InputEventsController : MonoBehaviour
         playerMovementController.ToggleCrouching(context.performed);
     }
     #endregion
+    
     #region Input Callbacks - INTERACTIONS
     public void handPrimaryAction(InputAction.CallbackContext context) {
         playerInteractionController.executePrimaryAction(context.phase);
@@ -71,6 +72,7 @@ public class InputEventsController : MonoBehaviour
         }
     }
     #endregion
+    
     #region Input Callbacks - HUD
     public void toggleInventoryScreen(InputAction.CallbackContext context) {
         if(context.canceled) {
