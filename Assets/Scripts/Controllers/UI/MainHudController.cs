@@ -12,8 +12,9 @@ public class MainHudController : MonoBehaviour
     
     #region UI Actions
     public void setMainPlayerMessageText(InteractionController.INTERACTION_TYPE interactionType, InteractableObject pickableObject) {
-        if(pickableObject.DisplayName != "")
+        if(!string.IsNullOrEmpty(pickableObject.DisplayName))
             mainPlayerMessageText.text = $"{getInteractionText(interactionType)} {pickableObject.DisplayName}";
+        else mainPlayerMessageText.text = "";
     }
     public void setMainPlayerMessageText(string message) {
         mainPlayerMessageText.text = message;

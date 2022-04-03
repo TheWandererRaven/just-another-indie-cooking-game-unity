@@ -10,17 +10,7 @@ public class ItemSlotUIController : MonoBehaviour
     public TextMeshProUGUI itemCount;
     public Image itemIcon;
     public Image backgroundImage;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public Image activeSlotIndicator;
     public void initializeSlot(int number, Color iconColor) {
         slotNumber.text = number.ToString();
         backgroundImage.color = iconColor;
@@ -32,5 +22,11 @@ public class ItemSlotUIController : MonoBehaviour
         itemCount.text = count <= 1 ? "" : count.ToString();
         itemIcon.sprite = iconSprite;
         itemIcon.color = iconColor;
+    }
+    public void ActivateSlot() {
+        activeSlotIndicator.gameObject.SetActive(true);
+    }
+    public void DeactivateSlot() {
+        activeSlotIndicator.gameObject.SetActive(false);
     }
 }

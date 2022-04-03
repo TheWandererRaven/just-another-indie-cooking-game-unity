@@ -18,6 +18,9 @@ public class PlayerHudManager : MonoBehaviour
     public void RefreshHotbar() {
         mainHudController.hotbarUIController.RefreshItemsIcons();
     }
+    public void HighlightActiveSlot(int slotIndex) {
+        mainHudController.hotbarUIController.HighlightActiveSlot(slotIndex);
+    }
     #endregion
     
     #region UI Information

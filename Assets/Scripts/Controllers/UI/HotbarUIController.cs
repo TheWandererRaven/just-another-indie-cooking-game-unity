@@ -11,6 +11,7 @@ public class HotbarUIController : MonoBehaviour
     public InventoryController playerInventory = null;
     public ItemsCatalogController itemsCatalog = null;
     private List<GameObject> hotbarSlots = new List<GameObject>();
+    private byte activeSlot = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -65,5 +66,12 @@ public class HotbarUIController : MonoBehaviour
                     //itemCountText.text = "";
             }
         }
+    }
+    public void HighlightActiveSlot(int slotToHighlight) {
+        print($"Activates slot number: {slotToHighlight}");
+        hotbarSlots[activeSlot].GetComponent<ItemSlotUIController>().DeactivateSlot();
+        hotbarSlots[slotToHighlight].GetComponent<ItemSlotUIController>().ActivateSlot();
+        activeSlot = (byte)slotToHighlight;
+        print($"Active slot: {activeSlot}");
     }
 }

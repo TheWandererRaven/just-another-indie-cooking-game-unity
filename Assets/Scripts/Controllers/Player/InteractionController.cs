@@ -39,8 +39,13 @@ public class InteractionController : MonoBehaviour
     #region GameObject Events
     void Update() {
         // Only need to keep the first "if" to work properly
-        if(Physics.Raycast(playerCamera.position, playerCamera.forward, out rayHit, interactionDistanceMax, raycastLayerMask) && !hasGrabbedObject())
-            playerHudManager.mainHudController.setMainPlayerMessageText(hasPickableInSights() ? INTERACTION_TYPE.PICKUP : INTERACTION_TYPE.INTERACTION, rayHit.transform.GetComponent<InteractableObject>());
+        if(Physics.Raycast(playerCamera.position, playerCamera.forward, out rayHit, interactionDistanceMax, raycastLayerMask) && !hasGrabbedObject()) {
+            InteractableObject interactableObject = null;
+            if(rayHit.transform.TryGetComponent<InteractableObject>(out interactableObject))
+                playerHudManager.mainHudController.setMainPlayerMessageText(hasPickableInSights() ? INTERACTION_TYPE.PICKUP : INTERACTION_TYPE.INTERACTION, interactableObject);
+            else
+                playerHudManager.mainHudController.setMainPlayerMessageText("");
+        }
         else
             playerHudManager.mainHudController.setMainPlayerMessageText("");
 
@@ -144,8 +149,9 @@ public class InteractionController : MonoBehaviour
     }
 
     public void setHotbarActiveSlot(int slotPos) {
-        GameObject slotPrefab = inventoryController.setActiveSlot(slotPos);
-        handController.equipItemFromHotbar(slotPrefab);
+        GameObject itemPrefab = inventoryController.setActiveSlot(slotPos);
+        handController.equipItemFromHotbar(itemPrefab);
+        playerHudManager.HighlightActiveSlot(slotPos);
     }
     #endregion
 
