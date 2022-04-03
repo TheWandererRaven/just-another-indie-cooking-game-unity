@@ -125,7 +125,7 @@ public class ControlsController : MonoBehaviour
         if(!interactionController.hasGrabbedObject() && context.performed)
             interactionController.grabObjectInSights();
         else if(context.canceled)
-            if(interactionController.grabbedObject != null) interactionController.dropGrabbedObject();
+            if(interactionController.grabbedObject != null) interactionController.releaseGrabbedObject();
     }
     public void toggleInventoryScreen(InputAction.CallbackContext context) {
         if(context.canceled) {

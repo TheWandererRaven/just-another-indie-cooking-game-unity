@@ -5,21 +5,27 @@ using UnityEngine.InputSystem;
 
 public class InputEventsController : MonoBehaviour
 {
+    #region Controller Configuration
     public float MouseSensitivity = 10;
     public PlayerMovementController playerMovementController;
     public InteractionController playerInteractionController;
-    public PlayerUIDisplayManagerController playerUIDisplayManagerController;
+    public PlayerHudManager playerHudManager;
     // Start is called before the first frame update
+    #endregion
+    
+    #region Game Object Events
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         
     }
+    #endregion
+
+    #region Input Callbacks - MOVEMENT
     public void Move(InputAction.CallbackContext context) {
         if(context.performed) {
             playerMovementController.UpdateWalkingInputs(context.ReadValue<Vector2>());
@@ -38,6 +44,8 @@ public class InputEventsController : MonoBehaviour
     public void Crouch(InputAction.CallbackContext context) {
         playerMovementController.ToggleCrouching(context.performed);
     }
+    #endregion
+    #region Input Callbacks - INTERACTIONS
     public void handPrimaryAction(InputAction.CallbackContext context) {
         playerInteractionController.executePrimaryAction(context.phase);
     }
@@ -53,18 +61,21 @@ public class InputEventsController : MonoBehaviour
         if(!playerInteractionController.hasGrabbedObject() && context.performed)
             playerInteractionController.grabObjectInSights();
         else if(context.canceled)
-            if(playerInteractionController.grabbedObject != null) playerInteractionController.dropGrabbedObject();
+            if(playerInteractionController.grabbedObject != null) playerInteractionController.releaseGrabbedObject();
     }
+    #endregion
+    #region Input Callbacks - HUD
     public void toggleInventoryScreen(InputAction.CallbackContext context) {
         if(context.canceled) {
-            if(playerUIDisplayManagerController.IsDisplayActive("InventoryDisplay")) {
-                playerUIDisplayManagerController.changeDisplay("MainDisplay");
+            if(playerHudManager.activeHud == PlayerHudManager.HUD.INVENTORY) {
+                playerHudManager.changeToHud(PlayerHudManager.HUD.MAIN);
                 Cursor.lockState = CursorLockMode.Locked;
             } else {
-                playerUIDisplayManagerController.changeDisplay("InventoryDisplay");
+                playerHudManager.changeToHud(PlayerHudManager.HUD.INVENTORY);
                 Cursor.lockState = CursorLockMode.None;
             }
         }
 
     }
+    #endregion
 }

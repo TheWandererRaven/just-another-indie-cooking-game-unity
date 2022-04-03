@@ -228,7 +228,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 27575066}
-  - component: {fileID: 27575064}
   - component: {fileID: 27575065}
   - component: {fileID: 27575062}
   m_Layer: 3
@@ -251,23 +250,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCameraController: {fileID: 34641127}
-  walkingSpeedUnitsPerSecond: 1
-  walkingSpeedMax: 1
-  crouchingSpeedUnitsPerSecond: 0.5
-  crouchingSize: 0.5
---- !u!114 &27575064
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 27575061}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 320f48b7aefaecf4f843f2e1c3e2059d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementSpeedUnitsPerSecond: 0
+  walkingSpeedUnitsPerSecond: 4
+  walkingSpeedMax: 2
+  crouchingSpeedUnitsPerSecond: 1
+  crouchingSize: 0.9
 --- !u!143 &27575065
 CharacterController:
   m_ObjectHideFlags: 0
@@ -779,6 +765,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 304063473}
+  - component: {fileID: 304063474}
   m_Layer: 5
   m_Name: MainDisplay
   m_TagString: Untagged
@@ -801,13 +788,26 @@ RectTransform:
   - {fileID: 1858031099}
   - {fileID: 578161890}
   m_Father: {fileID: 1212813097}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &304063474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 304063472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91db8c2608ffa8d46a761a54ad037a24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainPlayerMessageText: {fileID: 493102166}
 --- !u!1 &305385950
 GameObject:
   m_ObjectHideFlags: 0
@@ -1068,7 +1068,7 @@ GameObject:
   - component: {fileID: 493102167}
   - component: {fileID: 493102166}
   m_Layer: 5
-  m_Name: Interaction Display Text
+  m_Name: Message Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2192,7 +2192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 34641126}
-  playerInput: {fileID: 1114616375}
+  playerHudManager: {fileID: 1212813101}
   playerInteractionText: {fileID: 493102166}
   hotbarUIController: {fileID: 578161893}
   handController: {fileID: 556554148}
@@ -2307,7 +2307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   config: {fileID: 168971531}
-  playerMovement: {fileID: 27575064}
+  playerMovement: {fileID: 0}
   playerController: {fileID: 27575065}
   cameraController: {fileID: 34641127}
   interactionController: {fileID: 1076395795}
@@ -2713,8 +2713,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1905538228}
   - {fileID: 304063473}
+  - {fileID: 1905538228}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2793,10 +2793,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1212813096}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2aeabb89b07529843bbc6550e5cf73bb, type: 3}
+  m_Script: {fileID: 11500000, guid: f63fe926747e57e4ba02981f121f652b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displays: []
+  mainHudController: {fileID: 304063474}
+  activeHud: 0
 --- !u!1 &1218918608
 GameObject:
   m_ObjectHideFlags: 0
@@ -4115,7 +4116,7 @@ RectTransform:
   m_Children:
   - {fileID: 2061075997}
   m_Father: {fileID: 1212813097}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -4283,7 +4284,7 @@ GameObject:
   m_Layer: 0
   m_Name: Mastermind
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -4333,7 +4334,7 @@ MonoBehaviour:
   MouseSensitivity: 10
   playerMovementController: {fileID: 27575062}
   playerInteractionController: {fileID: 1076395795}
-  playerUIDisplayManagerController: {fileID: 1212813101}
+  playerHudManager: {fileID: 0}
 --- !u!114 &2018907427
 MonoBehaviour:
   m_ObjectHideFlags: 0

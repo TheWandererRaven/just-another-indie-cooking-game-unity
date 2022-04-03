@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PickableObjectController : InteractableObject
 {
-    public string Name = "";
-    public string DisplayName = "";
     public short Count = 0;
     public short MaxCount = 0;
     public void changeStackCount(short count) {

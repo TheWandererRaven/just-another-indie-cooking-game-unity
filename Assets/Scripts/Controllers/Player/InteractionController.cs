@@ -9,7 +9,8 @@ public class InteractionController : MonoBehaviour
     #region Controller Configuration
     public Transform playerCamera;
     public PlayerInput playerInput;
-    public TextMeshProUGUI playerInteractionText;
+    public PlayerHudManager playerHudManager;
+    //public TextMeshProUGUI playerInteractionText;
     public HotbarUIController hotbarUIController;
     public HandController handController;
     public InventoryController inventoryController;
@@ -34,29 +35,19 @@ public class InteractionController : MonoBehaviour
         }
     }
     #endregion
+    
+    #region GameObject Events
     void Update() {
         // Only need to keep the first "if" to work properly
-        if(Physics.Raycast(playerCamera.position, playerCamera.forward, out rayHit, interactionDistanceMax, raycastLayerMask) && !hasGrabbedObject()){
-            string objectName = hasPickableInSights() ? rayHit.transform.GetComponent<PickableObjectController>().DisplayName : rayHit.transform.name;
-            string interactControl = playerInput.actions.FindAction("Interact").GetBindingDisplayString();
-            string interactionType = hasPickableInSights() ? "pick up" : "interact with";
-            playerInteractionText.text = hasGrabbableInSights() ? "" : $"Press {interactControl} to {interactionType} {objectName}";
-        } else playerInteractionText.text = "";
+        if(Physics.Raycast(playerCamera.position, playerCamera.forward, out rayHit, interactionDistanceMax, raycastLayerMask) && !hasGrabbedObject())
+            playerHudManager.mainHudController.setMainPlayerMessageText(hasPickableInSights() ? INTERACTION_TYPE.PICKUP : INTERACTION_TYPE.INTERACTION, rayHit.transform.GetComponent<InteractableObject>());
+        else
+            playerHudManager.mainHudController.setMainPlayerMessageText("");
 
-        if(grabbedObject != null)
-            // HANDLE COMMON OBJECT with rigidbody
-            if(grabbedRigidBody != null){
-                Vector3 forwardPoint = playerCamera.position + (playerCamera.forward * (grabbedDistance - 1f));
-                if(Vector3.Distance(forwardPoint, grabbedObject.transform.position) <= grabbedDistanceThreshhold){
-                    Vector3 vectorDistance = forwardPoint - grabbedObject.transform.position;
-                    grabbedRigidBody.AddForce(
-                        vectorDistance * 100f
-                    );
-                } else dropGrabbedObject();
-            } else
-                // HANDLE UNCOMON OBJECT without rigidbody
-                grabbedObject.transform.position = playerCamera.position + (playerCamera.forward * (grabbedDistance - 1f));
+        moveGrabbedObject();
     }
+    #endregion
+    
     #region Validation Methods
     public bool hasGrabbableInSights() {
         return rayHit.transform != null ? rayHit.transform.CompareTag("Grabbable") : false;
@@ -75,10 +66,28 @@ public class InteractionController : MonoBehaviour
     }
     #endregion
 
-    #region Action Methods
+    #region Auxiliary Methods
     public GameObject getGameObjectInSights() {
         return rayHit.transform.gameObject;
     }
+    private void moveGrabbedObject() {
+        if(grabbedObject != null)
+            // HANDLE OBJECT with rigidbody
+            if(grabbedRigidBody != null){
+                Vector3 forwardPoint = playerCamera.position + (playerCamera.forward * (grabbedDistance - 1f));
+                if(Vector3.Distance(forwardPoint, grabbedObject.transform.position) <= grabbedDistanceThreshhold){
+                    Vector3 vectorDistance = forwardPoint - grabbedObject.transform.position;
+                    grabbedRigidBody.AddForce(
+                        vectorDistance * 100f
+                    );
+                } else releaseGrabbedObject();
+            } else
+                // HANDLE OBJECT without rigidbody
+                grabbedObject.transform.position = playerCamera.position + (playerCamera.forward * (grabbedDistance - 1f));
+    }
+    #endregion
+
+    #region Action Methods
     public void grabObjectInSights() {
         if(hasGrabbableInSights() || hasPickableInSights() || hasActionableInSights()){
             grabbedObject = getGameObjectInSights();
@@ -90,7 +99,7 @@ public class InteractionController : MonoBehaviour
             }
         }
     }
-    public void dropGrabbedObject() {
+    public void releaseGrabbedObject() {
         if(grabbedObject != null) {
             if(grabbedRigidBody != null){
                 grabbedRigidBody.useGravity = true;
@@ -103,7 +112,7 @@ public class InteractionController : MonoBehaviour
     }
     public void throwGrabbedObject() {
         GameObject throwableObject = grabbedObject;
-        dropGrabbedObject();
+        releaseGrabbedObject();
         Rigidbody throwableRB = null;
         if(throwableObject.TryGetComponent<Rigidbody>(out throwableRB)) throwableRB.AddForce(
             throwForce * playerCamera.forward, ForceMode.Impulse
@@ -134,4 +143,10 @@ public class InteractionController : MonoBehaviour
         handController.executeSecondaryAction(phase);
     }
     #endregion
+
+    public enum INTERACTION_TYPE
+    {
+        INTERACTION = 0,
+        PICKUP = 1
+    }
 }

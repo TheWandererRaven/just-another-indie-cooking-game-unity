@@ -11,6 +11,7 @@ public class PlayerMovementController : MonoBehaviour
     public float crouchingSpeedUnitsPerSecond = 0.5f;
     public float crouchingSize = 0.5f;
     #endregion
+    
     #region Script only variables
     private bool freezeMovment = false;
     private bool freezeCamera = false;
@@ -27,7 +28,8 @@ public class PlayerMovementController : MonoBehaviour
     private float standingRadius = 1.5f;
     private bool isCrouching = false;
     #endregion
-    // Start is called before the first frame update
+    
+    #region GameObject Events
     void Start()
     {
         CharacterController playerController = this.GetComponent<CharacterController>();
@@ -35,7 +37,6 @@ public class PlayerMovementController : MonoBehaviour
         standingRadius = playerController.radius;
     }
 
-    // Update is called once per frame
     void Update()
     {
         // ##################################### WALKING MOVEMENT #####################################
@@ -47,7 +48,7 @@ public class PlayerMovementController : MonoBehaviour
         }
 
         /*
-        // ##################################### INTERACT HANDLER #####################################
+        // ##################################### INTERACT HANDLER ########################g#############
         print(Input.GetAxis("Fire1"));
         
         // ##################################### GRAB #####################################
@@ -60,6 +61,7 @@ public class PlayerMovementController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape)) if(Cursor.lockState != CursorLockMode.None) Cursor.lockState = CursorLockMode.None; else Application.Quit();
         */
     }
+    #endregion
     private Vector3 CalculateMovementSpeed() {
         Vector3 Speed = (walkingSpeedBase * 1000) * (
             (this.transform.forward * walkingInputs.z) +
@@ -68,6 +70,8 @@ public class PlayerMovementController : MonoBehaviour
         if(Speed.magnitude > walkingSpeedMax) Speed = walkingSpeedMax * Speed / Speed.magnitude;
         return Speed;
     }
+    
+    #region Movement Executors
     public void UpdateWalkingInputs(Vector2 newWalkignInputs) {
         walkingInputs.x = newWalkignInputs.x;
         walkingInputs.z = newWalkignInputs.y;
@@ -95,4 +99,5 @@ public class PlayerMovementController : MonoBehaviour
         // For Vertical rotation, rotate the camera
         playerCameraController.RotateVertically(verticalRotation);
     }
+    #endregion
 }
