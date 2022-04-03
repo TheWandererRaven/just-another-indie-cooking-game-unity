@@ -63,6 +63,13 @@ public class InputEventsController : MonoBehaviour
         else if(context.canceled)
             if(playerInteractionController.grabbedObject != null) playerInteractionController.releaseGrabbedObject();
     }
+    public void SetHotbarActiveItem(InputAction.CallbackContext context) {
+        if(context.performed) {
+            int hotbarSlot = 1;
+            int.TryParse(context.control.displayName, out hotbarSlot);
+            playerInteractionController.setHotbarActiveSlot(hotbarSlot - 1);
+        }
+    }
     #endregion
     #region Input Callbacks - HUD
     public void toggleInventoryScreen(InputAction.CallbackContext context) {

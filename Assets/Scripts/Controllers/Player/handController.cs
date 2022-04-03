@@ -32,6 +32,23 @@ public class HandController : MonoBehaviour
             // TODO: ADD ITEM TO INVENTORY
         }
     }
+    public void equipItemFromHotbar(GameObject prefabItem = null) {
+        Destroy(equippedItem);
+        equippedItem = null;
+        if(prefabItem != null){
+            equippedItem = Instantiate(prefabItem);
+            equippedItem.transform.parent = this.transform;
+            equippedItem.transform.position = this.transform.position;
+            EquippableObject equippableController;
+            if(equippedItem.TryGetComponent<EquippableObject>(out equippableController)) equippedItem.transform.localRotation = Quaternion.Euler(equippableController.equippedRotation);
+            else equippedItem.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            Rigidbody equippedRB;
+            if(equippedItem.TryGetComponent<Rigidbody>(out equippedRB)) {
+                equippedOriginalRBContraints = equippedRB.constraints;
+                equippedRB.constraints = RigidbodyConstraints.FreezeAll;
+            }
+        }
+    }
     public void dropEquipped() {
         // TODO: REMOVE ITEM FROM INVENTORY
         equippedItem.transform.parent = null;

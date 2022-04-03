@@ -142,6 +142,11 @@ public class InteractionController : MonoBehaviour
     public void executeSecondaryAction(InputActionPhase phase) {
         handController.executeSecondaryAction(phase);
     }
+
+    public void setHotbarActiveSlot(int slotPos) {
+        GameObject slotPrefab = inventoryController.setActiveSlot(slotPos);
+        handController.equipItemFromHotbar(slotPrefab);
+    }
     #endregion
 
     public enum INTERACTION_TYPE

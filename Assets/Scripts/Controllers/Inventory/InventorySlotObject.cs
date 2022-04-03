@@ -4,14 +4,27 @@ using UnityEngine;
 
 public class InventorySlotObject
 {
+    #region Information
     public string Name = "";
     public string DisplayName = "";
     public string PrefabName = "";
     public short Count = 0;
     public short MaxCount = 0;
+    #endregion
+    
+    #region Constructors
     public InventorySlotObject() {
         this.emptySlot();
     }
+    #endregion
+
+    #region Slot Information
+    public bool isEmpty() {
+        return PrefabName == "";
+    }
+    #endregion
+    
+    #region Slot Manipulation - Add
     public void emptySlot() {
         addNewItem("", 0, 0);
     }
@@ -40,10 +53,14 @@ public class InventorySlotObject
         else this.Count = this.MaxCount;
         return ((short)overflowResult);
     }
+    #endregion
+    
+    #region Slot Manipulation - Remove
     public short removeFromStack(short count) {
         int resResult = this.Count - count;
         if(resResult < 0) this.Count = 0;
         else this.Count = (short)resResult;
         return (short)(resResult * -1);
     }
+    #endregion
 }

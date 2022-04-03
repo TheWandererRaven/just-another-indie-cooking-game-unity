@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class InventoryController : MonoBehaviour
 {
+    #region Controller Configuration
     public byte inventorySize = 5;
     public byte hotbarSize = 3;
     public InventorySlotObject[] Slots;
+    public ItemsCatalogController itemsCatalog;
+    #endregion
+    
+    #region GameObject Events
     void Start() {
         if(hotbarSize > inventorySize) hotbarSize = inventorySize;
         GenerateInventory();
@@ -15,6 +20,13 @@ public class InventoryController : MonoBehaviour
         string printableInv = "";
         foreach(InventorySlotObject slot in Slots) printableInv += $" [{slot.DisplayName}: {slot.Count}/{slot.MaxCount}] ";
     }
+    #endregion
+    
+    #region Script Only Variables
+    private byte activeSlot = 0;
+    #endregion
+
+    #region Invetnory Actions
     public void GenerateInventory() {
         Slots = new InventorySlotObject[inventorySize];
         for(int i = 0; i < Slots.Length; i++) {
@@ -83,4 +95,11 @@ public class InventoryController : MonoBehaviour
             Slots[prevPosition] = itemToReplace;
         }
     }
+    public GameObject setActiveSlot(int slotPos) {
+        if(Slots.Length > slotPos) {
+            activeSlot = (byte)slotPos;
+            return itemsCatalog.getPrefab(Slots[slotPos].PrefabName);
+        } else return null;
+    }
+    #endregion
 }
