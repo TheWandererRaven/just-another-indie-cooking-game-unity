@@ -11,7 +11,7 @@ public class InteractionController : MonoBehaviour
     public PlayerInput playerInput;
     public PlayerHudManager playerHudManager;
     //public TextMeshProUGUI playerInteractionText;
-    public HotbarUIController hotbarUIController;
+    //public HotbarUIController hotbarUIController;
     public HandController handController;
     public InventoryController inventoryController;
     public float interactionDistanceMax = 2f;
@@ -130,7 +130,7 @@ public class InteractionController : MonoBehaviour
         PickableObjectController pickableController = null;
         if(item.TryGetComponent<PickableObjectController>(out pickableController)) {
             pickableController.changeStackCount(inventoryController.addToStorage(item));
-            hotbarUIController.RefreshItemsIcons();
+            playerHudManager.RefreshHotbar();
         }
         //TODO: addToStorage(GameObject) automatically find the correct slot and add it to it, if full, add to another slot, if no slots available, don't do anything
         // will have to disable equipability for the moment

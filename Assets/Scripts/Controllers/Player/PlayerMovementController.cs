@@ -62,6 +62,8 @@ public class PlayerMovementController : MonoBehaviour
         */
     }
     #endregion
+    
+    #region Auxiliary Methods
     private Vector3 CalculateMovementSpeed() {
         Vector3 Speed = (walkingSpeedBase * 1000) * (
             (this.transform.forward * walkingInputs.z) +
@@ -70,6 +72,7 @@ public class PlayerMovementController : MonoBehaviour
         if(Speed.magnitude > walkingSpeedMax) Speed = walkingSpeedMax * Speed / Speed.magnitude;
         return Speed;
     }
+    #endregion
     
     #region Movement Executors
     public void UpdateWalkingInputs(Vector2 newWalkignInputs) {

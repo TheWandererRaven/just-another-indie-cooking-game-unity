@@ -808,6 +808,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainPlayerMessageText: {fileID: 493102166}
+  hotbarUIController: {fileID: 578161893}
 --- !u!1 &305385950
 GameObject:
   m_ObjectHideFlags: 0
@@ -2192,9 +2193,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 34641126}
+  playerInput: {fileID: 0}
   playerHudManager: {fileID: 1212813101}
-  playerInteractionText: {fileID: 493102166}
-  hotbarUIController: {fileID: 578161893}
   handController: {fileID: 556554148}
   inventoryController: {fileID: 952959567}
   interactionDistanceMax: 2

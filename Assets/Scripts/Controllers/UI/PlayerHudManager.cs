@@ -15,6 +15,9 @@ public class PlayerHudManager : MonoBehaviour
         this.transform.GetChild((int)activeHud).gameObject.SetActive(false);
         activeHud = hud;
     }
+    public void RefreshHotbar() {
+        mainHudController.hotbarUIController.RefreshItemsIcons();
+    }
     #endregion
     
     #region UI Information

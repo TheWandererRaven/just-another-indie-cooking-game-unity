@@ -7,6 +7,7 @@ public class MainHudController : MonoBehaviour
 {
     #region Controller Configuration
     public TextMeshProUGUI mainPlayerMessageText;
+    public HotbarUIController hotbarUIController;
     #endregion
     
     #region UI Actions

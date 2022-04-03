@@ -5,12 +5,16 @@ using UnityEngine.InputSystem;
 
 public class HandController : MonoBehaviour
 {
+    #region Controller Configuration
     public GameObject equippedItem;
     public float dropDistanceForward = 0.5f;
+    #endregion
+    
+    #region Script Variables
     private RigidbodyConstraints equippedOriginalRBContraints;
-    public bool isEquippedObjectActionable() {
-        return equippedItem != null ? equippedItem.CompareTag("Actionable") : false;
-    }
+    #endregion
+    
+    #region Hand Actions
     public void equipItem(GameObject item = null) {
         if(item != null){
             if(equippedItem != null) this.dropEquipped();
@@ -54,4 +58,11 @@ public class HandController : MonoBehaviour
             else 
                 foreach(SecondaryActionableObject obj in equippedItem.GetComponents<SecondaryActionableObject>()) obj.secondaryAction_Cancel();
     }
+    #endregion
+
+    #region Hand Information
+    public bool isEquippedObjectActionable() {
+        return equippedItem != null ? equippedItem.CompareTag("Actionable") : false;
+    }
+    #endregion
 }
